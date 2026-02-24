@@ -59,6 +59,7 @@ import me.bmax.apatch.util.ui.LocalSnackbarHost
 
 import com.ramcosta.composedestinations.generated.destinations.ApiMarketplaceScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.ThemeStoreScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.UmountConfigScreenDestination
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -155,7 +156,10 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                 onMagicMountChange = { isMagicMountEnabled = it },
                 isHideServiceEnabled = isHideServiceEnabled,
                 onHideServiceChange = { isHideServiceEnabled = it },
-                snackBarHost = snackBarHost
+                snackBarHost = snackBarHost,
+                onNavigateToUmountConfig = {
+                    navigator.navigate(UmountConfigScreenDestination)
+                }
             )
 
             AppearanceSettings(

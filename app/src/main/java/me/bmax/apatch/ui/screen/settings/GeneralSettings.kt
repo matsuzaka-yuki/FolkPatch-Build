@@ -67,7 +67,8 @@ fun GeneralSettings(
     onMagicMountChange: (Boolean) -> Unit,
     isHideServiceEnabled: Boolean,
     onHideServiceChange: (Boolean) -> Unit,
-    snackBarHost: SnackbarHostState
+    snackBarHost: SnackbarHostState,
+    onNavigateToUmountConfig: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val prefs = APApplication.sharedPreferences
@@ -102,6 +103,10 @@ fun GeneralSettings(
     val hideServiceTitle = stringResource(id = R.string.settings_hide_service)
     val hideServiceSummary = stringResource(id = R.string.settings_hide_service_summary)
     val showHideService = (kPatchReady && aPatchReady) && (matchGeneral || shouldShow(searchText, hideServiceTitle, hideServiceSummary))
+
+    val umountServiceTitle = stringResource(id = R.string.settings_umount_service)
+    val umountServiceSummary = stringResource(id = R.string.settings_umount_service_summary)
+    val showUmountService = (kPatchReady && aPatchReady) && (matchGeneral || shouldShow(searchText, umountServiceTitle, umountServiceSummary))
 
     val selinuxModeTitle = stringResource(id = R.string.settings_selinux_mode)
     val selinuxModeSummary = stringResource(id = R.string.settings_selinux_mode_summary)
@@ -159,7 +164,7 @@ fun GeneralSettings(
     val currentSchemeLabel = if (currentScheme == "root_service") stringResource(R.string.app_list_loading_scheme_root_service) else stringResource(R.string.app_list_loading_scheme_package_manager)
     val showAppListLoadingScheme = kPatchReady && (matchGeneral || shouldShow(searchText, appListLoadingSchemeTitle, currentSchemeLabel))
 
-    val showGeneralCategory = showLanguage || showUpdate || showAutoUpdate || showGlobalNamespace || showMagicMount || showHideService || showResetSuPath || showLauncherIcon || showAppTitle || showDesktopAppName || showDpi || showLog || showFolkXEngine || showAppListLoadingScheme || showSELinuxMode
+    val showGeneralCategory = showLanguage || showUpdate || showAutoUpdate || showGlobalNamespace || showMagicMount || showHideService || showUmountService || showResetSuPath || showLauncherIcon || showAppTitle || showDesktopAppName || showDpi || showLog || showFolkXEngine || showAppListLoadingScheme || showSELinuxMode
 
     // Dialog States
     val showLanguageDialog = remember { mutableStateOf(false) }
@@ -373,6 +378,16 @@ fun GeneralSettings(
                         setHideServiceEnabled(it)
                         onHideServiceChange(it)
                     })
+            }
+
+            // Zig Umount Service
+            if (showUmountService) {
+                ListItem(
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                    leadingContent = { Icon(Icons.Filled.FolderOff, umountServiceTitle) },
+                    supportingContent = { Text(umountServiceSummary) },
+                    headlineContent = { Text(umountServiceTitle) },
+                    modifier = Modifier.clickable { onNavigateToUmountConfig() })
             }
 
             // Launcher Icon
