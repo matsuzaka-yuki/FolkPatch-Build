@@ -322,9 +322,6 @@ fun AppearanceSettings(
 
     // List Layout Customization
     val isListStyle = currentStyle != "kernelsu" && currentStyle != "focus"
-    val listModeHiddenTitle = stringResource(id = R.string.settings_list_working_card_hide_mode)
-    val listModeHiddenSummary = stringResource(id = R.string.settings_list_working_card_hide_mode_summary)
-    val showListModeHidden = isListStyle && (matchLayout || shouldShow(searchText, listModeHiddenTitle, listModeHiddenSummary))
 
     val listCardHideStatusBadgeTitle = stringResource(id = R.string.settings_list_card_hide_status_badge)
     val listCardHideStatusBadgeSummary = stringResource(id = R.string.settings_list_card_hide_status_badge_summary)
@@ -383,7 +380,7 @@ fun AppearanceSettings(
     val showCustomBackgroundSwitch = matchBackground || shouldShow(searchText, customBackgroundTitle, customBackgroundSummary, customBackgroundEnabledText)
 
     // 布局分类显示条件（在所有依赖变量定义之后）
-    val showLayoutCategory = showHomeLayout || showNavLayout || showNavScheme || showGridBackgroundSwitch || showGridOpacity || showGridTextHidden || showGridModeHidden || showListModeHidden || showListCardHideStatusBadge || showCustomBackgroundSwitch  || showAdvancedTitleStyleSwitch
+    val showLayoutCategory = showHomeLayout || showNavLayout || showNavScheme || showGridBackgroundSwitch || showGridOpacity || showGridTextHidden || showGridModeHidden || showListCardHideStatusBadge || showCustomBackgroundSwitch  || showAdvancedTitleStyleSwitch
 
     val customDualDimTitle = stringResource(id = R.string.settings_custom_background_dual_dim)
     val showCustomDualDimSwitch = BackgroundConfig.isCustomBackgroundEnabled && (matchBackground || shouldShow(searchText, customDualDimTitle))
@@ -710,19 +707,6 @@ fun AppearanceSettings(
             }
             
             // List Layout Customization (List UI only)
-            if (showListModeHidden) {
-                SwitchItem(
-                    icon = Icons.Filled.VisibilityOff,
-                    title = listModeHiddenTitle,
-                    summary = listModeHiddenSummary,
-                    checked = BackgroundConfig.isListWorkingCardModeHidden,
-                    onCheckedChange = {
-                        BackgroundConfig.setListWorkingCardModeHiddenState(it)
-                        BackgroundConfig.save(context)
-                    }
-                )
-            }
-
             if (showListCardHideStatusBadge) {
                 SwitchItem(
                     icon = Icons.Filled.EmojiEmotions,

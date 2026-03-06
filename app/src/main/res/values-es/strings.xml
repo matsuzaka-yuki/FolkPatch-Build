@@ -754,8 +754,6 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="home_zygisk_implement">Implementación de Zygisk</string>
     <string name="home_mount_implement">Implementación de Montaje</string>
 
-    <string name="settings_list_working_card_hide_mode">Ocultar Tarjeta Half/Full</string>
-    <string name="settings_list_working_card_hide_mode_summary">Ocultar la tarjeta pequeña indicando el modo de trabajo</string>
     <string name="settings_list_card_hide_status_badge">Usar Emojis Clásicos</string>
     <string name="settings_list_card_hide_status_badge_summary">La insignia de estado en la página de inicio se convierte en emoji clásico</string>
     <string name="settings_custom_badge_text">Personalizar Texto de Insignia</string>

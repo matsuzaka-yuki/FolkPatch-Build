@@ -481,8 +481,6 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <string name="settings_grid_working_card_hide_text_summary">Ẩn văn bản "Đang hoạt động" hoặc "Chưa cài đặt" trên thẻ làm việc</string>
     <string name="settings_grid_working_card_hide_mode">Ẩn chế độ làm việc</string>
     <string name="settings_grid_working_card_hide_mode_summary">Ẩn văn bản "Full" hoặc "Half" trên thẻ làm việc</string>
-    <string name="settings_list_working_card_hide_mode">Ẩn thẻ Half/Full</string>
-    <string name="settings_list_working_card_hide_mode_summary">Ẩn thẻ nhỏ chỉ định chế độ làm việc</string>
     <string name="settings_list_card_hide_status_badge">Sử Dụng Emoji Cổ Điển</string>
     <string name="settings_list_card_hide_status_badge_summary">Huy hiệu trạng thái trên trang chủ trở thành emoji cổ điển</string>
     <string name="settings_custom_badge_text">Tùy Chỉnh Văn Bản Huy Hiệu</string>

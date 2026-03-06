@@ -475,8 +475,6 @@
     <string name="settings_grid_working_card_hide_text_summary">隐藏天使卡片上的"祈祷中"或"未赐福"文字</string>
     <string name="settings_grid_working_card_hide_mode">隐藏天使工作模式</string>
     <string name="settings_grid_working_card_hide_mode_summary">隐藏天使卡片上的"Full"或"Half"文字</string>
-    <string name="settings_list_working_card_hide_mode">隐藏天使模式小卡片</string>
-    <string name="settings_list_working_card_hide_mode_summary">隐藏显示天使工作模式的小卡片</string>
     <string name="settings_list_card_hide_status_badge">使用经典表情</string>
     <string name="settings_list_card_hide_status_badge_summary">首页的神圣印记即刻变身经典表情</string>
     <string name="settings_custom_badge_text">自选神恩印记文字</string>

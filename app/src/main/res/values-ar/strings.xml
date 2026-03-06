@@ -761,8 +761,6 @@
     <string name="home_zygisk_implement">تنفيذ Zygisk</string>
     <string name="home_mount_implement">تنفيذ التثبيت</string>
 
-    <string name="settings_list_working_card_hide_mode">إخفاء بطاقة نصف/كامل</string>
-    <string name="settings_list_working_card_hide_mode_summary">إخفاء البطاقة الصغيرة التي تشير إلى وضع العمل</string>
     <string name="settings_list_card_hide_status_badge">استخدم الإيموجي الكلاسيكي</string>
     <string name="settings_list_card_hide_status_badge_summary">شارة الحالة في الصفحة الرئيسية تتحول إلى إيموجي كلاسيكي</string>
     <string name="settings_custom_badge_text">نص الشارة المخصص</string>

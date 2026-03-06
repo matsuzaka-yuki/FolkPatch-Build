@@ -759,8 +759,6 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="home_zygisk_implement">Zygisk Uygulaması</string>
     <string name="home_mount_implement">Mount Uygulaması</string>
 
-    <string name="settings_list_working_card_hide_mode">Yarım/Tam Kartını Gizle</string>
-    <string name="settings_list_working_card_hide_mode_summary">Çalışma modunu gösteren küçük kartı gizle</string>
     <string name="settings_list_card_hide_status_badge">Klasik Emoji Kullan</string>
     <string name="settings_list_card_hide_status_badge_summary">Ana sayfa durum rozetini klasik emojiye dönüştür</string>
     <string name="settings_custom_badge_text">Özel Rozet Metni</string>
