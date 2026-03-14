@@ -29,15 +29,15 @@ object SoundEffectConfig {
     val PRESETS = listOf(
         "Zako",
         "Zako2",
-        "いもい",
-        "えへ",
+        "Imoi",
+        "Ehe",
         "Baka",
         "Ciallo"
     )
 
     val STARTUP_PRESETS = listOf(
         "Zako",
-        "へんたい"
+        "Hentai"
     )
 
     var isSoundEffectEnabled: Boolean by mutableStateOf(false)

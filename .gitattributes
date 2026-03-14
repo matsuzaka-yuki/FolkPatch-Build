@@ -19,6 +19,7 @@ tools/** binary
 *.jpg binary
 *.ttf binary
 *.so binary
+*.wav binary
 
 # Help GitHub detect languages
 native/jni/external/** linguist-vendored
