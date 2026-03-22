@@ -228,7 +228,7 @@ fun DeveloperInfo(
     val uriHandler = LocalUriHandler.current
     val githubUrl = "https://github.com/matsuzaka-yuki/FolkPatch"
     val telegramUrl = "https://t.me/FolkPatch"
-    val sociabuzzUrl = "https://afdian.com/a/matsuzaka_yuki"
+    val sociabuzzUrl = "https://ifdian.net/a/matsuzaka_yuki"
 
     if (showDialog) {
         ModalBottomSheet(
