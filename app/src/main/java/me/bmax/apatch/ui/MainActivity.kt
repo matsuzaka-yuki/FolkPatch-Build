@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.net.Uri
 import android.os.Bundle
+import androidx.activity.compose.PredictiveBackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -477,6 +478,29 @@ class MainActivity : AppCompatActivity() {
             }
 
             APatchThemeWithBackground(navController = navController) {
+                
+                var backProgress by remember { mutableStateOf(0f) }
+                var isBackInProgress by remember { mutableStateOf(false) }
+                
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    PredictiveBackHandler(enabled = true) { progress ->
+                        try {
+                            progress.collect { event ->
+                                if (event.progress <= 1f) {
+                                    backProgress = event.progress
+                                    isBackInProgress = true
+                                }
+                            }
+                        } catch (_: kotlinx.coroutines.CancellationException) {
+                            // 用户取消了返回手势，正常行为
+                        } catch (e: Exception) {
+                            android.util.Log.e("PredictiveBack", "Error handling predictive back", e)
+                        } finally {
+                            isBackInProgress = false
+                            backProgress = 0f
+                        }
+                    }
+                }
                 
                 val showUpdateDialog = remember { mutableStateOf(false) }
                 val context = LocalContext.current
