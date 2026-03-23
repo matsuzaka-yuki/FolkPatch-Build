@@ -985,9 +985,10 @@ private fun BottomBar(
                 visibleDestinations.forEachIndexed { index, destination ->
                     key(destination) {
                         val isCurrentDestOnBackStack by navController.isRouteOnBackStackAsState(destination.direction)
+                        val isSelected = index == effectiveSelectedIndex
 
                         NavigationBarItem(
-                            selected = index == effectiveSelectedIndex,
+                            selected = isSelected,
                             onClick = {
                                 onUserInteraction?.invoke()
                                 if (me.bmax.apatch.ui.theme.SoundEffectConfig.scope == me.bmax.apatch.ui.theme.SoundEffectConfig.SCOPE_BOTTOM_BAR) {
@@ -1024,7 +1025,7 @@ private fun BottomBar(
                                         }
                                     }
                                 ) {
-                                    if (isCurrentDestOnBackStack) {
+                                    if (isSelected) {
                                         Icon(destination.iconSelected, stringResource(destination.label))
                                     } else {
                                         Icon(destination.iconNotSelected, stringResource(destination.label))
