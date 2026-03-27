@@ -284,6 +284,16 @@ class MainActivity : AppCompatActivity() {
             window.isNavigationBarContrastEnforced = false
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
+            && !APApplication.sharedPreferences.getBoolean("predictive_back_enabled", true)
+        ) {
+            try {
+                window.javaClass
+                    .getMethod("setEnableOnBackInvokedCallback", Boolean::class.javaPrimitiveType)
+                    .invoke(window, false)
+            } catch (_: Exception) {}
+        }
+
         super.onCreate(savedInstanceState)
         updatePendingActionFromIntent(intent)
         

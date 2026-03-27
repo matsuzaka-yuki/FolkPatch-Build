@@ -922,4 +922,6 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="theme_download_downloading_file">Tema dosyası indiriliyor...</string>
     <string name="theme_download_downloading_image">Önizleme resmi indiriliyor...</string>
     <string name="theme_download_finalizing">Tamamlanıyor...</string>
+    <string name="settings_predictive_back">Tahmin Edici Geri Hareketi</string>
+    <string name="settings_predictive_back_summary">Android 14+ tahmin edici geri hareketi animasyonunu etkinleştir</string>
 </resources>

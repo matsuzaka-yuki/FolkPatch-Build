@@ -927,4 +927,6 @@
     <string name="theme_download_downloading_file">Загрузка файла темы...</string>
     <string name="theme_download_downloading_image">Загрузка изображения предпросмотра...</string>
     <string name="theme_download_finalizing">Завершение...</string>
+    <string name="settings_predictive_back">Предиктивный жест назад</string>
+    <string name="settings_predictive_back_summary">Включить анимацию предиктивного жеста назад (Android 14+)</string>
 </resources>

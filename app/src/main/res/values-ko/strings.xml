@@ -941,4 +941,6 @@
     <string name="script_library_save_log">로그 저장</string>
     <string name="script_library_log_saved">로그가 %s에 저장됨</string>
     <string name="script_library_log_save_failed">로그 저장 실패: %s</string>
+    <string name="settings_predictive_back">예측 백 제스처</string>
+    <string name="settings_predictive_back_summary">Android 14+ 예측 백 제스처 애니메이션 활성화</string>
 </resources>

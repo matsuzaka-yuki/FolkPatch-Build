@@ -941,4 +941,6 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="script_library_save_log">Save Log</string>
     <string name="script_library_log_saved">Log saved to %s</string>
     <string name="script_library_log_save_failed">Failed to save log: %s</string>
+    <string name="settings_predictive_back">Predictive Back Gesture</string>
+    <string name="settings_predictive_back_summary">Enable the Android 14+ predictive back gesture animation</string>
 </resources>

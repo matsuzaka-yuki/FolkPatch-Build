@@ -914,4 +914,6 @@
     <string name="theme_download_downloading_file">正在下载主题圣物...</string>
     <string name="theme_download_downloading_image">正在下载圣光预览...</string>
     <string name="theme_download_finalizing">圣光凝聚中...</string>
+    <string name="settings_predictive_back">圣预返回手势</string>
+    <string name="settings_predictive_back_summary">启用圣域 Android 14+ 的预知返回圣光动画</string>
 </resources>

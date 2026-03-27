@@ -913,4 +913,6 @@
     <string name="theme_download_downloading_file">正在下载主题魔法书...</string>
     <string name="theme_download_downloading_image">正在下载魔法预览...</string>
     <string name="theme_download_finalizing">魔法凝聚中...</string>
+    <string name="settings_predictive_back">Predictive Back Gesture</string>
+    <string name="settings_predictive_back_summary">Enable the Android 14+ predictive back gesture animation</string>
 </resources>

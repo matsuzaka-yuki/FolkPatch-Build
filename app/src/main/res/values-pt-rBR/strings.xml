@@ -928,4 +928,6 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="theme_download_downloading_file">Baixando arquivo do tema...</string>
     <string name="theme_download_downloading_image">Baixando imagem de visualização...</string>
     <string name="theme_download_finalizing">Finalizando...</string>
+    <string name="settings_predictive_back">Gesto de voltar preditivo</string>
+    <string name="settings_predictive_back_summary">Ativar animação do gesto de voltar preditivo do Android 14+</string>
 </resources>

@@ -911,4 +911,6 @@
     <string name="theme_download_downloading_file">正在纳取主题仙卷...</string>
     <string name="theme_download_downloading_image">正在纳取仙图预览...</string>
     <string name="theme_download_finalizing">凝丹中...</string>
+    <string name="settings_predictive_back">仙预返回手势</string>
+    <string name="settings_predictive_back_summary">启用仙界 Android 14+ 的预知返回仙法动画</string>
 </resources>

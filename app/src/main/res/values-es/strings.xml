@@ -930,4 +930,6 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="theme_download_downloading_file">Descargando archivo de tema...</string>
     <string name="theme_download_downloading_image">Descargando imagen de vista previa...</string>
     <string name="theme_download_finalizing">Finalizando...</string>
+    <string name="settings_predictive_back">Gesto atrás predictivo</string>
+    <string name="settings_predictive_back_summary">Habilitar la animación del gesto atrás predictivo de Android 14+</string>
 </resources>

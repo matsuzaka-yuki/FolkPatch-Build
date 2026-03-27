@@ -909,4 +909,6 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="theme_download_downloading_file">Mengunduh file tema...</string>
     <string name="theme_download_downloading_image">Mengunduh gambar pratinjau...</string>
     <string name="theme_download_finalizing">Menyelesaikan...</string>
+    <string name="settings_predictive_back">Gestur Kembali Prediktif</string>
+    <string name="settings_predictive_back_summary">Aktifkan animasi gestur kembali prediktif Android 14+</string>
 </resources>

@@ -911,4 +911,6 @@
     <string name="theme_download_downloading_file">正在下载主题菜谱...</string>
     <string name="theme_download_downloading_image">正在下载菜品预览...</string>
     <string name="theme_download_finalizing">准备上菜...</string>
+    <string name="settings_predictive_back">预测性返回手势</string>
+    <string name="settings_predictive_back_summary">启用 Android 14+ 的预测性返回手势动画</string>
 </resources>

@@ -838,4 +838,6 @@
     <string name="script_library_save_log">ログを保存</string>
     <string name="script_library_log_saved">「%s」にログを保存しました。</string>
     <string name="script_library_log_save_failed">ログの保存に失敗: %s</string>
+    <string name="settings_predictive_back">予測バックジェスチャー</string>
+    <string name="settings_predictive_back_summary">Android 14+ の予測バックジェスチャーアニメーションを有効にする</string>
 </resources>

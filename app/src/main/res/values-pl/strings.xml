@@ -929,4 +929,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="theme_download_downloading_file">Pobieranie pliku motywu...</string>
     <string name="theme_download_downloading_image">Pobieranie obrazu podglądu...</string>
     <string name="theme_download_finalizing">Finalizowanie...</string>
+    <string name="settings_predictive_back">Predykcyjny gest wstecz</string>
+    <string name="settings_predictive_back_summary">Włącz animację predykcyjnego gestu wstecz w Androidzie 14+</string>
 </resources>

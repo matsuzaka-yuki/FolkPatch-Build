@@ -914,4 +914,6 @@
     <string name="umount_config_save_confirm">确认保存配置？</string>
     <string name="umount_config_save_success">配置保存成功</string>
     <string name="umount_config_save_failed">配置保存失败</string>
+    <string name="settings_predictive_back">预测性返回手势</string>
+    <string name="settings_predictive_back_summary">启用 Android 14+ 的预测性返回手势动画</string>
 </resources>

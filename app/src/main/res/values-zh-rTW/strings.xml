@@ -916,4 +916,6 @@
     <string name="theme_download_downloading_file">正在下載主題檔案...</string>
     <string name="theme_download_downloading_image">正在下載預覽圖片...</string>
     <string name="theme_download_finalizing">正在完成...</string>
+    <string name="settings_predictive_back">預測性返回手勢</string>
+    <string name="settings_predictive_back_summary">啟用 Android 14+ 的預測性返回手勢動畫</string>
 </resources>

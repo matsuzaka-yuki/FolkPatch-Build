@@ -148,12 +148,16 @@ fun GeneralSettings(
     val folkXEngineSummary = stringResource(id = R.string.settings_folkx_engine_summary)
     val showFolkXEngine = matchGeneral || shouldShow(searchText, folkXEngineTitle, folkXEngineSummary)
 
+    val predictiveBackTitle = stringResource(id = R.string.settings_predictive_back)
+    val predictiveBackSummary = stringResource(id = R.string.settings_predictive_back_summary)
+    val showPredictiveBack = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) && (matchGeneral || shouldShow(searchText, predictiveBackTitle, predictiveBackSummary))
+
     val appListLoadingSchemeTitle = stringResource(id = R.string.settings_app_list_loading_scheme)
     val currentScheme = prefs.getString("app_list_loading_scheme", "root_service")
     val currentSchemeLabel = if (currentScheme == "root_service") stringResource(R.string.app_list_loading_scheme_root_service) else stringResource(R.string.app_list_loading_scheme_package_manager)
     val showAppListLoadingScheme = kPatchReady && (matchGeneral || shouldShow(searchText, appListLoadingSchemeTitle, currentSchemeLabel))
 
-    val showGeneralCategory = showLanguage || showUpdate || showAutoUpdate || showGlobalNamespace || showMagicMount || showResetSuPath || showLauncherIcon || showAppTitle || showDesktopAppName || showDpi || showLog || showFolkXEngine || showAppListLoadingScheme || showSELinuxMode
+    val showGeneralCategory = showLanguage || showUpdate || showAutoUpdate || showGlobalNamespace || showMagicMount || showResetSuPath || showLauncherIcon || showAppTitle || showDesktopAppName || showDpi || showLog || showFolkXEngine || showPredictiveBack || showAppListLoadingScheme || showSELinuxMode
 
     // Dialog States
     val showLanguageDialog = remember { mutableStateOf(false) }
@@ -292,6 +296,22 @@ fun GeneralSettings(
                         modifier = Modifier.clickable { showFolkXAnimationSpeedDialog.value = true }
                     )
                 }
+            }
+
+            // Predictive Back Gesture
+            if (showPredictiveBack) {
+                var predictiveBackEnabled by remember { mutableStateOf(prefs.getBoolean("predictive_back_enabled", true)) }
+                SwitchItem(
+                    icon = Icons.Filled.ArrowBack,
+                    title = predictiveBackTitle,
+                    summary = predictiveBackSummary,
+                    checked = predictiveBackEnabled,
+                    onCheckedChange = {
+                        predictiveBackEnabled = it
+                        prefs.edit { putBoolean("predictive_back_enabled", it) }
+                        (context as? Activity)?.recreate()
+                    }
+                )
             }
 
             // App List Loading Scheme

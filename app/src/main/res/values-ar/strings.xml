@@ -915,4 +915,6 @@
     <string name="theme_download_downloading_file">جارٍ تنزيل ملف السمة...</string>
     <string name="theme_download_downloading_image">جارٍ تنزيل صورة المعاينة...</string>
     <string name="theme_download_finalizing">جارٍ الانتهاء...</string>
+    <string name="settings_predictive_back">إيماءة العودة التنبؤية</string>
+    <string name="settings_predictive_back_summary">تمكين رسوم إيماءة العودة التنبؤية المتحركة في Android 14+</string>
 </resources>

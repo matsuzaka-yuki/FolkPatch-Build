@@ -915,4 +915,6 @@
     <string name="theme_download_downloading_file">正在下载主题文件喵...</string>
     <string name="theme_download_downloading_image">正在下载预览图片喵...</string>
     <string name="theme_download_finalizing">正在完成喵...</string>
+    <string name="settings_predictive_back">预测性返回手势喵</string>
+    <string name="settings_predictive_back_summary">启用 Android 14+ 的预测性返回手势动画喵</string>
 </resources>
