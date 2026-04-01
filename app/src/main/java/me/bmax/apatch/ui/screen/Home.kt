@@ -711,7 +711,7 @@ private fun TopBar(
                         text = { Text(stringResource(R.string.home_more_menu_feedback_or_suggestion)) },
                         onClick = {
                             showDropdownMoreOptions = false
-                            uriHandler.openUri("https://github.com/matsuzaka-yuki/FolkPatch/issues/new/choose")
+                            uriHandler.openUri("https://github.com/LyraVoid/FolkPatch/issues/new/choose")
                         }
                     )
                     WallpaperAwareDropdownMenuItem(

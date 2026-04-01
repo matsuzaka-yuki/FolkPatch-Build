@@ -1,7 +1,7 @@
 <div align="center">
 <img src='logo.png' width='500px' alt="FolkPatch logo">
 
-[![Latest Release](https://img.shields.io/github/v/release/matsuzaka-yuki/FolkPatch?label=Release&logo=github)](https://github.com/matsuzaka-yuki/FolkPatch/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/matsuzaka-yuki/FolkPatch?label=Release&logo=github)](https://github.com/LyraVoid/FolkPatch/releases/latest)
 [![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/FolkPatch)
 [![GitHub License](https://img.shields.io/github/license/matsuzaka-yuki/FolkPatch?logo=gnu)](/LICENSE)
 
@@ -61,7 +61,7 @@ FolkPatch - 专注界面优化与功能扩展的Root管理工具
 ### 📦 使用指导
 
 1. **下载安装：**
-   从 [发布页面](https://github.com/matsuzaka-yuki/FolkPatch/releases/latest) 下载最新版安装包
+   从 [发布页面](https://github.com/LyraVoid/FolkPatch/releases/latest) 下载最新版安装包
 
 2. **安装应用：**
    安装最新版安装包到你的 Android 设备

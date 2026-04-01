@@ -1,7 +1,7 @@
 <div align="center">
 <img src='logo.png' width='500px' alt="FolkPatch logo">
 
-[![Latest Release](https://img.shields.io/github/v/release/matsuzaka-yuki/FolkPatch?label=Release&logo=github)](https://github.com/matsuzaka-yuki/FolkPatch/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/matsuzaka-yuki/FolkPatch?label=Release&logo=github)](https://github.com/LyraVoid/FolkPatch/releases/latest)
 [![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/FolkPatch)
 [![GitHub License](https://img.shields.io/github/license/matsuzaka-yuki/FolkPatch?logo=gnu)](/LICENSE)
 
@@ -61,7 +61,7 @@ FolkPatch - インターフェースの最適化と拡張機能に重視した R
 ### 📦 インストールガイド
 
 1. **ダウンロードとインストール:**
-   [リリースページ](https://github.com/matsuzaka-yuki/FolkPatch/releases/latest)から最新のインストールパッケージをダウンロード
+   [リリースページ](https://github.com/LyraVoid/FolkPatch/releases/latest)から最新のインストールパッケージをダウンロード
 
 2. **アプリをインストール:**
    最新のインストールパッケージをあなたの Android デバイスにインストール

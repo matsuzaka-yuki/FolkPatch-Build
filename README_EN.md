@@ -1,7 +1,7 @@
 <div align="center">
 <img src='logo.png' width='500px' alt="FolkPatch logo">
 
-[![Latest Release](https://img.shields.io/github/v/release/matsuzaka-yuki/FolkPatch?label=Release&logo=github)](https://github.com/matsuzaka-yuki/FolkPatch/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/matsuzaka-yuki/FolkPatch?label=Release&logo=github)](https://github.com/LyraVoid/FolkPatch/releases/latest)
 [![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/FolkPatch)
 [![GitHub License](https://img.shields.io/github/license/matsuzaka-yuki/FolkPatch?logo=gnu)](/LICENSE)
 
@@ -61,7 +61,7 @@ Get started quickly with our comprehensive documentation. Whether it's installat
 ### 📦 Installation Guide
 
 1. **Download & Install:**
-   Download the latest installation package from the [Releases page](https://github.com/matsuzaka-yuki/FolkPatch/releases/latest)
+   Download the latest installation package from the [Releases page](https://github.com/LyraVoid/FolkPatch/releases/latest)
 
 2. **Install App:**
    Install the latest installation package to your Android device

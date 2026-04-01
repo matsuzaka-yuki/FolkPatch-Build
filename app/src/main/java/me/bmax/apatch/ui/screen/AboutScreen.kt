@@ -106,7 +106,7 @@ fun AboutScreen(navigator: DestinationsNavigator) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 FilledTonalButton(
-                    onClick = { uriHandler.openUri("https://github.com/matsuzaka-yuki/FolkPatch") }
+                    onClick = { uriHandler.openUri("https://github.com/LyraVoid/FolkPatch") }
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.github),
