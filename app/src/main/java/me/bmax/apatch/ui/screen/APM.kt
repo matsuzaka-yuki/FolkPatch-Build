@@ -159,6 +159,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenu
 import me.bmax.apatch.ui.component.WallpaperAwareDropdownMenuItem
 import me.bmax.apatch.util.ModuleBackupUtils
+import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.ui.LocalBottomBarVisible
 import me.bmax.apatch.ui.LocalIsFloatingNavMode
@@ -1073,7 +1074,7 @@ private fun writeFolkBanner(
     moduleId: String,
     uri: Uri
 ): ByteArray? {
-    val data = context.contentResolver.openInputStream(uri)?.use { it.readBytes() } ?: return null
+    val data = SafeUriResolver.openInputStream(context, uri)?.use { it.readBytes() } ?: return null
     val file = getFolkBannerFile(context, moduleId)
     file.outputStream().use { it.write(data) }
     return data

@@ -224,20 +224,11 @@ fun undoUninstallModule(id: String): Boolean {
 fun installModule(
     uri: Uri, type: MODULE_TYPE, onFinish: (Boolean) -> Unit, onStdout: (String) -> Unit, onStderr: (String) -> Unit
 ): Boolean {
-    val resolver = apApp.contentResolver
     val permissionMessage = apApp.getString(R.string.file_picker_permission_desc)
     val inputStream = try {
-        resolver.openInputStream(uri)
+        SafeUriResolver.openInputStream(apApp, uri)
     } catch (e: Exception) {
         Log.e(TAG, "Failed to open input stream", e)
-        Handler(Looper.getMainLooper()).post {
-            Toast.makeText(apApp, permissionMessage, Toast.LENGTH_SHORT).show()
-        }
-        onStderr("$permissionMessage\n")
-        onFinish(false)
-        return false
-    }
-    if (inputStream == null) {
         Handler(Looper.getMainLooper()).post {
             Toast.makeText(apApp, permissionMessage, Toast.LENGTH_SHORT).show()
         }

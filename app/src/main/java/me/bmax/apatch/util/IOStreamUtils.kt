@@ -11,7 +11,7 @@ import java.io.OutputStream
 
 val cr: ContentResolver get() = apApp.contentResolver
 
-fun Uri.inputStream() = cr.openInputStream(this) ?: throw FileNotFoundException()
+fun Uri.inputStream() = SafeUriResolver.openInputStream(apApp, this)
 
 fun Uri.outputStream() = cr.openOutputStream(this, "rwt") ?: throw FileNotFoundException()
 

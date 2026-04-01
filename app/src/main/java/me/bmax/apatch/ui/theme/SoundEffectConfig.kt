@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import me.bmax.apatch.util.SafeUriResolver
 import java.io.File
 
 object SoundEffectConfig {
@@ -171,7 +172,7 @@ object SoundEffectConfig {
             val newFilename = "sound_effect_${System.currentTimeMillis()}.$extension"
             val oldFilename = soundEffectFilename
             
-            context.contentResolver.openInputStream(uri)?.use { input ->
+            SafeUriResolver.openInputStream(context, uri)?.use { input ->
                 val file = File(getSoundEffectDir(context), newFilename)
                 file.outputStream().use { output ->
                     input.copyTo(output)
@@ -216,7 +217,7 @@ object SoundEffectConfig {
             val newFilename = "startup_sound_${System.currentTimeMillis()}.$extension"
             val oldFilename = startupSoundFilename
             
-            context.contentResolver.openInputStream(uri)?.use { input ->
+            SafeUriResolver.openInputStream(context, uri)?.use { input ->
                 val file = File(getSoundEffectDir(context), newFilename)
                 file.outputStream().use { output ->
                     input.copyTo(output)

@@ -34,6 +34,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.viewmodel.OnlineScriptViewModel
+import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.util.download
 import java.io.File
 
@@ -156,7 +157,7 @@ fun OnlineScriptItem(
                     val outputFile = File(scriptDir, scriptFileName)
                     when (uri.scheme?.lowercase()) {
                         "content" -> {
-                            context.contentResolver.openInputStream(uri)?.use { input ->
+                            SafeUriResolver.openInputStream(context, uri)?.use { input ->
                                 outputFile.outputStream().use { output ->
                                     input.copyTo(output)
                                 }

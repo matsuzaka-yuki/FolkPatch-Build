@@ -137,6 +137,7 @@ import androidx.compose.runtime.getValue
 
 import me.bmax.apatch.util.BiometricUtils
 import me.bmax.apatch.util.ModuleBackupUtils
+import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.util.getFileNameFromUri
 import kotlinx.coroutines.CoroutineScope
 import coil.compose.AsyncImage
@@ -170,7 +171,7 @@ private fun readKpmBanner(context: Context, moduleName: String): ByteArray? {
 }
 
 private fun writeKpmBanner(context: Context, moduleName: String, uri: Uri): ByteArray? {
-    val data = context.contentResolver.openInputStream(uri)?.use { it.readBytes() } ?: return null
+    val data = SafeUriResolver.openInputStream(context, uri)?.use { it.readBytes() } ?: return null
     val file = getKpmBannerFile(context, moduleName)
     file.outputStream().use { it.write(data) }
     return data

@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontFamily
+import me.bmax.apatch.util.SafeUriResolver
 import java.io.File
 
 object FontConfig {
@@ -91,7 +92,7 @@ object FontConfig {
             val newFilename = "custom_font_${System.currentTimeMillis()}.ttf"
             val oldFilename = customFontFilename
             
-            context.contentResolver.openInputStream(uri)?.use { input ->
+            SafeUriResolver.openInputStream(context, uri)?.use { input ->
                 val file = File(context.filesDir, newFilename)
                 file.outputStream().use { output ->
                     input.copyTo(output)

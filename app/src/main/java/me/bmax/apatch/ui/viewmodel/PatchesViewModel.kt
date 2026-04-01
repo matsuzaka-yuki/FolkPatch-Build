@@ -46,6 +46,7 @@ import java.util.Locale
 
 import me.bmax.apatch.util.getFileNameFromUri
 import me.bmax.apatch.util.ModuleBackupUtils
+import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.ui.screen.selectedKPImg
 
 private const val TAG = "PatchViewModel"
@@ -681,7 +682,7 @@ class PatchesViewModel : ViewModel() {
 
         try {
             val resolver = context.contentResolver
-            resolver.openInputStream(inputUri)?.use { inputStream ->
+            SafeUriResolver.openInputStream(context, inputUri)?.use { inputStream ->
                 resolver.openOutputStream(outUri)?.use { outputStream ->
                     inputStream.copyTo(outputStream)
                 }

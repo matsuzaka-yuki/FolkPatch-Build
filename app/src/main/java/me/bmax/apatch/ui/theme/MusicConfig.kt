@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import me.bmax.apatch.util.SafeUriResolver
 import java.io.File
 
 object MusicConfig {
@@ -110,7 +111,7 @@ object MusicConfig {
             val newFilename = "background_music_${System.currentTimeMillis()}.mp3"
             val oldFilename = musicFilename
             
-            context.contentResolver.openInputStream(uri)?.use { input ->
+            SafeUriResolver.openInputStream(context, uri)?.use { input ->
                 val file = File(getMusicDir(context), newFilename)
                 file.outputStream().use { output ->
                     input.copyTo(output)

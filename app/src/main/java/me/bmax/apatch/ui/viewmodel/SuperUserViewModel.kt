@@ -29,6 +29,7 @@ import me.bmax.apatch.services.RootServices
 import me.bmax.apatch.util.APatchCli
 import me.bmax.apatch.util.HanziToPinyin
 import me.bmax.apatch.util.PkgConfig
+import me.bmax.apatch.util.SafeUriResolver
 import me.bmax.apatch.util.getRootShell
 import java.text.Collator
 import java.util.Locale
@@ -252,7 +253,7 @@ class SuperUserViewModel : ViewModel() {
     fun restoreAppList(context: Context, uri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val jsonStr = context.contentResolver.openInputStream(uri)?.use { inputStream ->
+                val jsonStr = SafeUriResolver.openInputStream(context, uri)?.use { inputStream ->
                     inputStream.bufferedReader().use { it.readText() }
                 } ?: return@launch
 

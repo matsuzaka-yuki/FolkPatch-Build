@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.apApp
+import me.bmax.apatch.util.SafeUriResolver
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -88,7 +89,7 @@ object KpmAutoLoadManager {
                 destFile.delete()
             }
 
-            context.contentResolver.openInputStream(uri)?.use { input ->
+            SafeUriResolver.openInputStream(context, uri)?.use { input ->
                 destFile.outputStream().use { output ->
                     input.copyTo(output)
                 }

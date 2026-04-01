@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.util.MusicManager
+import me.bmax.apatch.util.SafeUriResolver
 import org.json.JSONObject
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
@@ -360,7 +361,7 @@ object ThemeManager {
     suspend fun readThemeMetadata(context: Context, uri: Uri): ThemeMetadata? {
         return withContext(Dispatchers.IO) {
             try {
-                context.contentResolver.openInputStream(uri)?.use { `is` ->
+                SafeUriResolver.openInputStream(context, uri)?.use { `is` ->
                     // Read IV
                     val iv = ByteArray(16)
                     if (`is`.read(iv) != 16) return@withContext null
@@ -420,7 +421,7 @@ object ThemeManager {
 
             try {
                 // 1. Decrypt and Unzip
-                context.contentResolver.openInputStream(uri)?.use { `is` ->
+                SafeUriResolver.openInputStream(context, uri)?.use { `is` ->
                     // Read IV
                     val iv = ByteArray(16)
                     if (`is`.read(iv) != 16) throw Exception("Invalid theme file")

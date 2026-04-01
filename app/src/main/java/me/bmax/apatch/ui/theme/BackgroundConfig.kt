@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.compose.runtime.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import me.bmax.apatch.util.SafeUriResolver
 import java.io.File
 import java.io.FileOutputStream
 
@@ -1000,7 +1001,7 @@ object BackgroundManager {
     private suspend fun saveImageToInternalStorage(context: Context, uri: Uri, targetFile: File): Uri? {
         return withContext(Dispatchers.IO) {
             try {
-                val inputStream = context.contentResolver.openInputStream(uri) ?: return@withContext null
+                val inputStream = SafeUriResolver.openInputStream(context, uri) ?: return@withContext null
                 // val file = getBackgroundFile(context) // Use targetFile instead
 
                 FileOutputStream(targetFile).use { outputStream ->

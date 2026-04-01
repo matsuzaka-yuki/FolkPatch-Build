@@ -282,7 +282,7 @@ object ModuleShortcut {
                     }
                 } else null
             } else {
-                context.contentResolver.openInputStream(uri)?.use { input ->
+                SafeUriResolver.openInputStream(context, uri)?.use { input ->
                     BitmapFactory.decodeStream(input)
                 }
             }

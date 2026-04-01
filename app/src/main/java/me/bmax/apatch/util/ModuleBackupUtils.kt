@@ -174,7 +174,7 @@ object ModuleBackupUtils {
 
                 if (tempFile.exists()) tempFile.delete()
 
-                context.contentResolver.openInputStream(uri)?.use { input ->
+                SafeUriResolver.openInputStream(context, uri)?.use { input ->
                     tempFile.outputStream().use { output ->
                         input.copyTo(output)
                     }
