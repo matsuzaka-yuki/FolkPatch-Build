@@ -20,6 +20,8 @@ object HardwareMonitor {
     private var prevGpuUsage: Long = 0
     private var prevGpuTotal: Long = 0
     private var lastGpuUpdateTime: Long = 0
+    private var smoothedGpuUsage: Float = -1f
+    private const val GPU_EMA_ALPHA = 0.3f
 
     // Adreno path
     private const val ADRENO_PATH_NEW = "/sys/class/kgsl/kgsl-3d0/gpu_busy_percentage"
@@ -105,67 +107,81 @@ object HardwareMonitor {
     suspend fun getGpuUsage(): Int {
         return withContext(Dispatchers.IO) {
             try {
+                var rawGpu = -1
+
                 // 1. Try Direct Percentage Path (New Adreno)
                 val adrenoPercentResult = rootShellForResult("cat $ADRENO_PATH_NEW")
                 if (adrenoPercentResult.isSuccess && adrenoPercentResult.out.isNotEmpty()) {
                     val content = adrenoPercentResult.out[0].trim().replace("%", "")
                     val value = content.toIntOrNull()
-                    if (value != null) return@withContext value.coerceIn(0, 100)
+                    if (value != null) rawGpu = value.coerceIn(0, 100)
                 }
 
                 // 2. Try Adreno (Cumulative Differential)
-                val adrenoResult = rootShellForResult("cat $ADRENO_PATH")
-                if (adrenoResult.isSuccess && adrenoResult.out.isNotEmpty()) {
-                    val content = adrenoResult.out[0].trim()
-                    val parts = content.split(Regex("\\s+"))
-                    if (parts.size >= 2) {
-                        val currUsage = parts[0].toLongOrNull() ?: 0L
-                        val currTotal = parts[1].toLongOrNull() ?: 0L
+                if (rawGpu < 0) {
+                    val adrenoResult = rootShellForResult("cat $ADRENO_PATH")
+                    if (adrenoResult.isSuccess && adrenoResult.out.isNotEmpty()) {
+                        val content = adrenoResult.out[0].trim()
+                        val parts = content.split(Regex("\\s+"))
+                        if (parts.size >= 2) {
+                            val currUsage = parts[0].toLongOrNull() ?: 0L
+                            val currTotal = parts[1].toLongOrNull() ?: 0L
 
-                        if (lastGpuUpdateTime == 0L || currTotal < prevGpuTotal) {
-                            // First run or reset/overflow
-                            prevGpuUsage = currUsage
-                            prevGpuTotal = currTotal
-                            lastGpuUpdateTime = System.currentTimeMillis()
-                            return@withContext 0
+                            if (lastGpuUpdateTime == 0L || currTotal < prevGpuTotal) {
+                                prevGpuUsage = currUsage
+                                prevGpuTotal = currTotal
+                                lastGpuUpdateTime = System.currentTimeMillis()
+                                rawGpu = 0
+                            } else {
+                                val deltaUsage = currUsage - prevGpuUsage
+                                val deltaTotal = currTotal - prevGpuTotal
+
+                                prevGpuUsage = currUsage
+                                prevGpuTotal = currTotal
+                                lastGpuUpdateTime = System.currentTimeMillis()
+
+                                rawGpu = if (deltaTotal > 0) {
+                                    (deltaUsage.toDouble() / deltaTotal.toDouble() * 100.0).toInt().coerceIn(0, 100)
+                                } else {
+                                    0
+                                }
+                            }
                         }
-
-                        val deltaUsage = currUsage - prevGpuUsage
-                        val deltaTotal = currTotal - prevGpuTotal
-
-                        prevGpuUsage = currUsage
-                        prevGpuTotal = currTotal
-                        lastGpuUpdateTime = System.currentTimeMillis()
-
-                        if (deltaTotal > 0) {
-                            val percent = (deltaUsage.toDouble() / deltaTotal.toDouble() * 100.0).toInt()
-                            return@withContext percent.coerceIn(0, 100)
-                        }
-                        // If deltaTotal is 0, usage hasn't changed or instantaneous?
-                        // If values are same as before, load is likely 0 (no new cycles) or constant?
-                        // For Adreno, gpubusy is cycles. If no cycles added, load is 0.
-                        return@withContext 0
                     }
                 }
 
                 // 3. Try Mali (Direct Value)
-                val maliResult = rootShellForResult("cat $MALI_PATH")
-                if (maliResult.isSuccess && maliResult.out.isNotEmpty()) {
-                    val value = maliResult.out[0].trim().toIntOrNull() ?: 0
-                    if (value > 100) {
-                        return@withContext (value * 100 / 255).coerceIn(0, 100)
+                if (rawGpu < 0) {
+                    val maliResult = rootShellForResult("cat $MALI_PATH")
+                    if (maliResult.isSuccess && maliResult.out.isNotEmpty()) {
+                        val value = maliResult.out[0].trim().toIntOrNull() ?: 0
+                        rawGpu = if (value > 100) {
+                            (value * 100 / 255).coerceIn(0, 100)
+                        } else {
+                            value.coerceIn(0, 100)
+                        }
                     }
-                    return@withContext value.coerceIn(0, 100)
                 }
                 
                 // 4. Try Generic
-                val genericResult = rootShellForResult("cat $GENERIC_PATH")
-                 if (genericResult.isSuccess && genericResult.out.isNotEmpty()) {
-                     val content = genericResult.out[0].trim().replace("%", "")
-                     return@withContext content.toIntOrNull()?.coerceIn(0, 100) ?: 0
-                 }
+                if (rawGpu < 0) {
+                    val genericResult = rootShellForResult("cat $GENERIC_PATH")
+                    if (genericResult.isSuccess && genericResult.out.isNotEmpty()) {
+                        val content = genericResult.out[0].trim().replace("%", "")
+                        rawGpu = content.toIntOrNull()?.coerceIn(0, 100) ?: 0
+                    }
+                }
 
-                0
+                if (rawGpu < 0) rawGpu = 0
+
+                // Apply EMA smoothing
+                smoothedGpuUsage = if (smoothedGpuUsage < 0) {
+                    rawGpu.toFloat()
+                } else {
+                    smoothedGpuUsage * (1f - GPU_EMA_ALPHA) + rawGpu.toFloat() * GPU_EMA_ALPHA
+                }
+
+                smoothedGpuUsage.toInt().coerceIn(0, 100)
             } catch (e: Exception) {
                 Log.e(TAG, "Error reading GPU usage", e)
                 0
