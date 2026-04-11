@@ -300,50 +300,51 @@ fun AppearanceSettings(
     var floatingSwipeHide by remember { mutableStateOf(prefs.getBoolean("floating_swipe_hide", true)) }
     val showFloatingSettings = isFloatingNav && (matchLayout || shouldShow(searchText, floatingAutoHideTitle, floatingAutoHideSummary, floatingSwipeHideTitle, floatingSwipeHideSummary))
 
-    // Grid Layout Background (KernelSU style only)
+    // Grid Layout Background (KernelSU/Grid style)
     val isKernelSuStyle = currentStyle == "kernelsu"
+    val showGridCardSettings = isKernelSuStyle || (isStatsLayout && statsTopLayout == "grid")
     val gridBackgroundTitle = stringResource(id = R.string.settings_grid_working_card_background)
     val gridBackgroundSummary = stringResource(id = R.string.settings_grid_working_card_background_summary)
     val gridBackgroundEnabledText = stringResource(id = R.string.settings_grid_working_card_background_enabled)
     val gridSelectImageText = stringResource(id = R.string.settings_select_background_image)
     
-    val showGridBackgroundSwitch = isKernelSuStyle && (matchLayout || shouldShow(searchText, gridBackgroundTitle, gridBackgroundSummary, gridBackgroundEnabledText, gridSelectImageText))
+    val showGridBackgroundSwitch = showGridCardSettings && (matchLayout || shouldShow(searchText, gridBackgroundTitle, gridBackgroundSummary, gridBackgroundEnabledText, gridSelectImageText))
     
     val gridOpacityTitle = stringResource(id = R.string.settings_custom_background_opacity)
-    val showGridOpacity = isKernelSuStyle && BackgroundConfig.isGridWorkingCardBackgroundEnabled && (matchLayout || shouldShow(searchText, gridOpacityTitle))
+    val showGridOpacity = showGridCardSettings && BackgroundConfig.isGridWorkingCardBackgroundEnabled && (matchLayout || shouldShow(searchText, gridOpacityTitle))
     val gridDualOpacityTitle = stringResource(id = R.string.settings_grid_working_card_dual_opacity)
-    val showGridDualOpacitySwitch = isKernelSuStyle && BackgroundConfig.isGridWorkingCardBackgroundEnabled && (matchLayout || shouldShow(searchText, gridDualOpacityTitle))
+    val showGridDualOpacitySwitch = showGridCardSettings && BackgroundConfig.isGridWorkingCardBackgroundEnabled && (matchLayout || shouldShow(searchText, gridDualOpacityTitle))
     
     val gridDayOpacityTitle = stringResource(id = R.string.settings_grid_working_card_day_opacity)
-    val showGridDayOpacity = isKernelSuStyle && BackgroundConfig.isGridWorkingCardBackgroundEnabled && BackgroundConfig.isGridDualOpacityEnabled && (matchLayout || shouldShow(searchText, gridDayOpacityTitle))
+    val showGridDayOpacity = showGridCardSettings && BackgroundConfig.isGridWorkingCardBackgroundEnabled && BackgroundConfig.isGridDualOpacityEnabled && (matchLayout || shouldShow(searchText, gridDayOpacityTitle))
     
     val gridNightOpacityTitle = stringResource(id = R.string.settings_grid_working_card_night_opacity)
-    val showGridNightOpacity = isKernelSuStyle && BackgroundConfig.isGridWorkingCardBackgroundEnabled && BackgroundConfig.isGridDualOpacityEnabled && (matchLayout || shouldShow(searchText, gridNightOpacityTitle))
+    val showGridNightOpacity = showGridCardSettings && BackgroundConfig.isGridWorkingCardBackgroundEnabled && BackgroundConfig.isGridDualOpacityEnabled && (matchLayout || shouldShow(searchText, gridNightOpacityTitle))
 
     val gridDimTitle = stringResource(id = R.string.settings_custom_background_dim)
-    val showGridDim = isKernelSuStyle && BackgroundConfig.isGridWorkingCardBackgroundEnabled && (matchLayout || shouldShow(searchText, gridDimTitle))
+    val showGridDim = showGridCardSettings && BackgroundConfig.isGridWorkingCardBackgroundEnabled && (matchLayout || shouldShow(searchText, gridDimTitle))
 
     val gridSelectTitle = stringResource(id = R.string.settings_select_background_image)
     val gridSelectedText = stringResource(id = R.string.settings_grid_working_card_background_selected)
-    val showGridPicker = isKernelSuStyle && BackgroundConfig.isGridWorkingCardBackgroundEnabled && (matchLayout || shouldShow(searchText, gridSelectTitle, gridSelectedText))
+    val showGridPicker = showGridCardSettings && BackgroundConfig.isGridWorkingCardBackgroundEnabled && (matchLayout || shouldShow(searchText, gridSelectTitle, gridSelectedText))
     
     val gridClearTitle = stringResource(id = R.string.settings_clear_grid_working_card_background)
-    val showGridClear = isKernelSuStyle && BackgroundConfig.isGridWorkingCardBackgroundEnabled && (matchLayout || shouldShow(searchText, gridClearTitle))
+    val showGridClear = showGridCardSettings && BackgroundConfig.isGridWorkingCardBackgroundEnabled && (matchLayout || shouldShow(searchText, gridClearTitle))
 
     val gridCheckHiddenTitle = stringResource(id = R.string.settings_grid_working_card_hide_check)
     val gridCheckHiddenSummary = stringResource(id = R.string.settings_grid_working_card_hide_check_summary)
-    val showGridCheckHidden = isKernelSuStyle && (matchLayout || shouldShow(searchText, gridCheckHiddenTitle, gridCheckHiddenSummary))
+    val showGridCheckHidden = showGridCardSettings && (matchLayout || shouldShow(searchText, gridCheckHiddenTitle, gridCheckHiddenSummary))
     
     val gridTextHiddenTitle = stringResource(id = R.string.settings_grid_working_card_hide_text)
     val gridTextHiddenSummary = stringResource(id = R.string.settings_grid_working_card_hide_text_summary)
-    val showGridTextHidden = isKernelSuStyle && (matchLayout || shouldShow(searchText, gridTextHiddenTitle, gridTextHiddenSummary))
+    val showGridTextHidden = showGridCardSettings && (matchLayout || shouldShow(searchText, gridTextHiddenTitle, gridTextHiddenSummary))
 
     val gridModeHiddenTitle = stringResource(id = R.string.settings_grid_working_card_hide_mode)
     val gridModeHiddenSummary = stringResource(id = R.string.settings_grid_working_card_hide_mode_summary)
-    val showGridModeHidden = isKernelSuStyle && (matchLayout || shouldShow(searchText, gridModeHiddenTitle, gridModeHiddenSummary))
+    val showGridModeHidden = showGridCardSettings && (matchLayout || shouldShow(searchText, gridModeHiddenTitle, gridModeHiddenSummary))
 
     // List Layout Customization
-    val isListStyle = currentStyle != "kernelsu" && currentStyle != "focus"
+    val isListStyle = currentStyle != "kernelsu" && currentStyle != "focus" && !(isStatsLayout && statsTopLayout == "grid")
 
     val listCardHideStatusBadgeTitle = stringResource(id = R.string.settings_list_card_hide_status_badge)
     val listCardHideStatusBadgeSummary = stringResource(id = R.string.settings_list_card_hide_status_badge_summary)
@@ -362,7 +363,7 @@ fun AppearanceSettings(
     val currentBadgeTextModeIndex = BackgroundConfig.customBadgeTextMode
     val currentBadgeTextMode = badgeTextModes.getOrElse(currentBadgeTextModeIndex) { badgeTextModes[0] }
     val showCustomBadgeTextList = isListStyle && !BackgroundConfig.isListWorkingCardModeHidden && (matchLayout || shouldShow(searchText, customBadgeTextTitle, customBadgeTextSummary))
-    val showCustomBadgeTextGrid = isKernelSuStyle && !BackgroundConfig.isGridWorkingCardModeHidden && (matchLayout || shouldShow(searchText, customBadgeTextTitle, customBadgeTextSummary))
+    val showCustomBadgeTextGrid = showGridCardSettings && !BackgroundConfig.isGridWorkingCardModeHidden && (matchLayout || shouldShow(searchText, customBadgeTextTitle, customBadgeTextSummary))
     val showCustomBadgeTextDialog = remember { mutableStateOf(false) }
 
     // Advanced Title Style
@@ -1306,7 +1307,7 @@ fun AppearanceSettings(
             }
             
             // Grid Working Card Settings (KernelSU/Grid UI only)
-            if (isKernelSuStyle) {
+            if (showGridCardSettings) {
                 // Grid Background Switch
                 if (showGridBackgroundSwitch) {
                     SwitchItem(
