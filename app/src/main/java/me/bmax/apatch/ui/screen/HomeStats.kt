@@ -34,6 +34,7 @@ import me.bmax.apatch.ui.viewmodel.DashboardViewModel
 import me.bmax.apatch.ui.viewmodel.SystemMonitorState
 import me.bmax.apatch.ui.viewmodel.TimeSeriesData
 import me.bmax.apatch.util.AppData
+import me.bmax.apatch.ui.theme.BackgroundConfig
 import kotlin.math.roundToInt
 
 @Composable
@@ -81,6 +82,8 @@ fun HomeScreenStats(
     val isInstalled = kpState != APApplication.State.UNKNOWN_STATE
     val statsTopLayout = APApplication.sharedPreferences.getString("stats_top_layout", "list") ?: "list"
     val useGridTop = statsTopLayout == "grid"
+    val isWallpaperMode = BackgroundConfig.isCustomBackgroundEnabled &&
+        (BackgroundConfig.customBackgroundUri != null || BackgroundConfig.isMultiBackgroundEnabled)
 
     var zygiskImplement by remember { mutableStateOf("None") }
     var mountImplement by remember { mutableStateOf("None") }
@@ -111,6 +114,7 @@ fun HomeScreenStats(
         Row(
             modifier = Modifier
                 .padding(innerPadding)
+                .padding(top = if (isWallpaperMode) 24.dp else 0.dp)
                 .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -142,6 +146,7 @@ fun HomeScreenStats(
         Column(
             modifier = Modifier
                 .padding(innerPadding)
+                .padding(top = if (isWallpaperMode) 24.dp else 0.dp)
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
