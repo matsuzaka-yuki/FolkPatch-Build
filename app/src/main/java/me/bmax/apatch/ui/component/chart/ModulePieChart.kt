@@ -96,24 +96,27 @@ fun ModulePieChart(
 fun rememberPieSliceDataFromCounts(
     kernelModules: Int = 0,
     apmModules: Int = 0,
-    superusers: Int = 0
+    superusers: Int = 0,
+    kpmLabel: String = "KPM",
+    apmLabel: String = "APM",
+    suLabel: String = "SU"
 ): List<PieSliceData> {
     val emptyColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.15f)
 
-    return remember(kernelModules, apmModules, superusers) {
+    return remember(kernelModules, apmModules, superusers, kpmLabel, apmLabel, suLabel) {
         listOf(
             PieSliceData(
-                label = "KPM",
+                label = kpmLabel,
                 value = kernelModules.toFloat(),
                 color = if (kernelModules > 0) ChartPalette.KPM else emptyColor
             ),
             PieSliceData(
-                label = "APM",
+                label = apmLabel,
                 value = apmModules.toFloat(),
                 color = if (apmModules > 0) ChartPalette.APM else emptyColor
             ),
             PieSliceData(
-                label = "SU",
+                label = suLabel,
                 value = superusers.toFloat(),
                 color = if (superusers > 0) ChartPalette.SU else emptyColor
             )

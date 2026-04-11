@@ -484,7 +484,8 @@ private fun ModuleStatisticsSection(
                 data = rememberPieSliceDataFromCounts(
                     kernelModules = kernelModuleCount,
                     apmModules = apmModuleCount,
-                    superusers = superuserCount
+                    superusers = superuserCount,
+                    apmLabel = stringResource(R.string.apm)
                 ),
                 centerLabel = if (totalCount > 0) totalCount.toString() else "--",
                 modifier = Modifier.size(140.dp)

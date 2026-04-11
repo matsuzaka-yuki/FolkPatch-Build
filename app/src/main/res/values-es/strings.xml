@@ -25,7 +25,7 @@
     <string name="settings_nav_mode_bottom">Siempre barra inferior</string>
     <string name="settings_nav_mode_rail">Siempre barra lateral</string>
     <string name="settings_nav_mode_floating">Barra inferior flotante</string>
-    <string name="settings_show_apm">Mostrar APM</string>
+    <string name="settings_show_apm">Mostrar módulos del sistema</string>
     <string name="settings_show_kpm">Mostrar KPM</string>
     <string name="settings_show_superuser">Mostrar SuperUsuario</string>
     <string name="settings_floating_auto_hide">Ocultar automáticamente</string>
@@ -222,7 +222,7 @@
     <string name="su_hide_system_apps">Ocultar apps del sistema</string>
     <string name="su_refresh">Actualizar</string>
 
-    <string name="apm">APModule</string>
+    <string name="apm">Módulo del Sistema</string>
     <string name="apm_not_installed">AndroidPatch no instalado</string>
     <string name="apm_failed_to_enable">Error al habilitar módulo: %s</string>
     <string name="apm_failed_to_disable">Error al deshabilitar módulo: %s</string>
@@ -554,7 +554,7 @@ Aquí hay algunas posibles razones para el fallo de autenticación—por favor v
     <string name="apm_copy_list_success">Lista de módulos copiada</string>
 
     <!-- APM Bulk Install Strings -->
-    <string name="apm_bulk_install_title">Instalación Masiva APM</string>
+    <string name="apm_bulk_install_title">Instalación Masiva de Módulos del Sistema</string>
     <string name="apm_bulk_install_list_title">Lista de Módulos</string>
     <string name="apm_bulk_install_add">Añadir Módulos</string>
     <string name="apm_bulk_install_empty">No se añadieron módulos</string>
@@ -797,7 +797,7 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="enable_badge_count">Configuración de conteo de insignias</string>
     <string name="enable_badge_count_summary">Configurar la visualización del conteo de insignias para elementos de navegación</string>
     <string name="badge_superuser">Mostrar insignia de superusuario</string>
-    <string name="badge_apm">Mostrar insignia de APM</string>
+    <string name="badge_apm">Mostrar insignia de módulo del sistema</string>
     <string name="badge_kernel">Mostrar insignia de módulo del kernel</string>
     <string name="settings_sound_effect">Efecto de sonido</string>
     <string name="settings_sound_effect_summary">Reproducir efecto de sonido al hacer clic</string>
@@ -967,6 +967,6 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="home_stats_manager_label">Gestor</string>
     <string name="home_device_status_gpu_load">GPU</string>
     <string name="home_stats_kernel_modules">Módulos del Kernel</string>
-    <string name="home_stats_apm_modules">Módulos APM</string>
+    <string name="home_stats_apm_modules">Módulos del Sistema</string>
     <string name="home_stats_superusers">Superusuarios</string>
 </resources>

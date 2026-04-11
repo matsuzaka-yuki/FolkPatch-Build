@@ -28,7 +28,7 @@
     <string name="settings_nav_mode_bottom">Selalu Bilah Bawah</string>
     <string name="settings_nav_mode_rail">Selalu Bilah Samping</string>
     <string name="settings_nav_mode_floating">Bilah Bawah Mengambang</string>
-    <string name="settings_show_apm">Tampilkan APM</string>
+    <string name="settings_show_apm">Tampilkan Modul Sistem</string>
     <string name="settings_show_kpm">Tampilkan KPM</string>
     <string name="settings_show_superuser">Tampilkan SuperUser</string>
     <string name="settings_floating_auto_hide">Sembunyi Otomatis</string>
@@ -209,7 +209,7 @@
     <string name="su_hide_system_apps">Sembunyikan aplikasi sistem</string>
     <string name="su_refresh">Segarkan</string>
 
-    <string name="apm">APModule</string>
+    <string name="apm">Modul Sistem</string>
     <string name="apm_not_installed">AndroidPatch tidak terinstal</string>
     <string name="apm_failed_to_enable">Gagal mengaktifkan modul: %s</string>
     <string name="apm_failed_to_disable">Gagal menonaktifkan modul: %s</string>
@@ -536,7 +536,7 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="kpm_autoload_first_time_confirm">Mengerti</string>
     <string name="kpm_autoload_do_not_show_again">Jangan tampilkan lagi</string>
 
-    <string name="apm_bulk_install_title">Instalasi Massal APM</string>
+    <string name="apm_bulk_install_title">Instalasi Massal Modul Sistem</string>
     <string name="apm_bulk_install_list_title">Daftar Modul</string>
     <string name="apm_bulk_install_add">Tambahkan Modul</string>
     <string name="apm_bulk_install_empty">Tidak ada modul yang ditambahkan</string>
@@ -775,7 +775,7 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="enable_badge_count">Pengaturan Hitung Badge</string>
     <string name="enable_badge_count_summary">Konfigurasi tampilan hitung badge untuk item navigasi</string>
     <string name="badge_superuser">Tampilkan Badge Superuser</string>
-    <string name="badge_apm">Tampilkan Badge APM</string>
+    <string name="badge_apm">Tampilkan Badge Modul Sistem</string>
     <string name="badge_kernel">Tampilkan Badge Modul Kernel</string>
     <string name="settings_sound_effect">Efek Suara</string>
     <string name="settings_sound_effect_summary">Mainkan suara saat klik</string>
@@ -946,6 +946,6 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="home_stats_manager_label">Manajer</string>
     <string name="home_device_status_gpu_load">GPU</string>
     <string name="home_stats_kernel_modules">Modul Kernel</string>
-    <string name="home_stats_apm_modules">Modul APM</string>
+    <string name="home_stats_apm_modules">Modul Sistem</string>
     <string name="home_stats_superusers">Superuser</string>
 </resources>

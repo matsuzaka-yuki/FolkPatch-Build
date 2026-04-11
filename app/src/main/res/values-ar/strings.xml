@@ -25,7 +25,7 @@
     <string name="settings_nav_mode_bottom">شريط سفلي دائمًا</string>
     <string name="settings_nav_mode_rail">شريط جانبي دائمًا</string>
     <string name="settings_nav_mode_floating">شريط سفلي عائم</string>
-    <string name="settings_show_apm">إظهار APM</string>
+    <string name="settings_show_apm">إظهار وحدات النظام</string>
     <string name="settings_show_kpm">إظهار KPM</string>
     <string name="settings_show_superuser">إظهار المستخدم المتميز</string>
     <string name="settings_floating_auto_hide">إخفاء تلقائي</string>
@@ -556,7 +556,7 @@
     <string name="apm_copy_list_success">تم نسخ قائمة الوحدات</string>
 
     <!-- APM Bulk Install Strings -->
-    <string name="apm_bulk_install_title">التثبيت المجمع لـ APM</string>
+    <string name="apm_bulk_install_title">التثبيت المجمع لوحدات النظام</string>
     <string name="apm_bulk_install_list_title">قائمة الوحدات</string>
     <string name="apm_bulk_install_add">إضافة وحدات</string>
     <string name="apm_bulk_install_empty">لم تتم إضافة أي وحدات</string>
@@ -799,7 +799,7 @@
     <string name="enable_badge_count">إعدادات عدد الشارات</string>
     <string name="enable_badge_count_summary">تكوين عرض عدد الشارات لعناصر التنقل</string>
     <string name="badge_superuser">إظهار شارة المستخدم المتميز</string>
-    <string name="badge_apm">إظهار شارة APM</string>
+    <string name="badge_apm">إظهار شارة وحدات النظام</string>
     <string name="badge_kernel">إظهار شارة وحدة النواة</string>
     <string name="settings_sound_effect">Sound Effect</string>
     <string name="settings_sound_effect_summary">Play sound effect on click</string>
@@ -952,6 +952,6 @@
     <string name="home_stats_manager_label">المدير</string>
     <string name="home_device_status_gpu_load">GPU</string>
     <string name="home_stats_kernel_modules">وحدات النواة</string>
-    <string name="home_stats_apm_modules">وحدات APM</string>
+    <string name="home_stats_apm_modules">وحدات النظام</string>
     <string name="home_stats_superusers">المستخدمون الخارقون</string>
 </resources>

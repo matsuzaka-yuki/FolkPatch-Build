@@ -25,7 +25,7 @@
     <string name="settings_nav_mode_bottom">Her Zaman Alt Çubuk</string>
     <string name="settings_nav_mode_rail">Her Zaman Yan Çubuk</string>
     <string name="settings_nav_mode_floating">Kayan Alt Çubuk</string>
-    <string name="settings_show_apm">APM Göster</string>
+    <string name="settings_show_apm">Sistem Modüllerini Göster</string>
     <string name="settings_show_kpm">KPM Göster</string>
     <string name="settings_show_superuser">SuperUser Göster</string>
     <string name="settings_floating_auto_hide">Otomatik Gizle</string>
@@ -211,7 +211,7 @@
     <string name="su_show_system_apps">Sistem uygulamalarını göster</string>
     <string name="su_hide_system_apps">Sistem uygulamalarını gizle</string>
     <string name="su_refresh">Yenile</string>
-    <string name="apm">APModule</string>
+    <string name="apm">Sistem Modülü</string>
 
 
     <string name="apm_not_installed">AndroidPatch yüklü değil</string>
@@ -553,7 +553,7 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="apm_copy_list_success">Modül listesi kopyalandı</string>
 
     <!-- APM Bulk Install Strings -->
-    <string name="apm_bulk_install_title">APM Toplu Kurulum</string>
+    <string name="apm_bulk_install_title">Sistem Modülü Toplu Kurulum</string>
     <string name="apm_bulk_install_list_title">Modül Listesi</string>
     <string name="apm_bulk_install_add">Modül Ekle</string>
     <string name="apm_bulk_install_empty">Eklenmiş modül yok</string>
@@ -811,7 +811,7 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="enable_badge_count">Rozet Sayısı Ayarları</string>
     <string name="enable_badge_count_summary">Gezinme öğeleri için rozet sayısı gösterimini yapılandır</string>
     <string name="badge_superuser">SuperUser Rozetini Göster</string>
-    <string name="badge_apm">APM Rozetini Göster</string>
+    <string name="badge_apm">Sistem Modülü Rozetini Göster</string>
     <string name="badge_kernel">Kernel Modülü Rozetini Göster</string>
     <string name="settings_sound_effect">Ses Efekti</string>
     <string name="settings_sound_effect_summary">Tıklamada ses efekti çal</string>
@@ -959,6 +959,6 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="home_stats_manager_label">Yönetici</string>
     <string name="home_device_status_gpu_load">GPU</string>
     <string name="home_stats_kernel_modules">Çekirdek Modüller</string>
-    <string name="home_stats_apm_modules">APM Modülleri</string>
+    <string name="home_stats_apm_modules">Sistem Modülleri</string>
     <string name="home_stats_superusers">Süper Kullanıcılar</string>
 </resources>

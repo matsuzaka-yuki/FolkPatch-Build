@@ -18,7 +18,7 @@
     <string name="settings_nav_mode_bottom">常にボトムバー</string>
     <string name="settings_nav_mode_rail">常にサイドレール</string>
     <string name="settings_nav_mode_floating">フローティングボトムバー</string>
-    <string name="settings_show_apm">APM を表示</string>
+    <string name="settings_show_apm">システムモジュールを表示</string>
     <string name="settings_show_kpm">KPM を表示</string>
     <string name="settings_show_superuser">スーパーユーザーを表示</string>
     <string name="settings_floating_auto_hide">自動非表示</string>
@@ -509,7 +509,7 @@
     <string name="apm_copy_list_title">リストをコピー</string>
     <string name="apm_copy_list_success">モジュールのリストをコピーしました。</string>
     <!-- APM Bulk Install Strings -->
-    <string name="apm_bulk_install_title">APM を一括インストール</string>
+    <string name="apm_bulk_install_title">システムモジュールを一括インストール</string>
     <string name="apm_bulk_install_list_title">モジュールのリスト</string>
     <string name="apm_bulk_install_add">モジュールを追加</string>
     <string name="apm_bulk_install_empty">モジュールが追加されていません</string>
@@ -779,7 +779,7 @@
     <string name="enable_badge_count">バッジカウントの設定</string>
     <string name="enable_badge_count_summary">ナビゲーション項目のバッジカウント表示を設定します。</string>
     <string name="badge_superuser">スーパーユーザーバッジを表示</string>
-    <string name="badge_apm">APM バッジを表示</string>
+    <string name="badge_apm">システムモジュールバッジを表示</string>
     <string name="badge_kernel">カーネルモジュールバッジを表示</string>
     <string name="settings_sound_effect">サウンド効果</string>
     <string name="settings_sound_effect_summary">タップ時にサウンド効果を再生します。</string>
@@ -875,6 +875,6 @@
     <string name="home_stats_manager_label">マネージャー</string>
     <string name="home_device_status_gpu_load">GPU</string>
     <string name="home_stats_kernel_modules">カーネルモジュール</string>
-    <string name="home_stats_apm_modules">APM モジュール</string>
+    <string name="home_stats_apm_modules">システムモジュール</string>
     <string name="home_stats_superusers">スーパーユーザー</string>
 </resources>

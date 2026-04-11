@@ -20,7 +20,7 @@
     <string name="settings_nav_mode_bottom">Zawsze dolny pasek</string>
     <string name="settings_nav_mode_rail">Zawsze boczny pasek</string>
     <string name="settings_nav_mode_floating">Pływający dolny pasek</string>
-    <string name="settings_show_apm">Pokaż kartę APM</string>
+    <string name="settings_show_apm">Pokaż moduły systemowe</string>
     <string name="settings_show_kpm">Pokaż kartę KPM</string>
     <string name="settings_show_superuser">Pokaż kartę Superuser</string>
     <string name="settings_floating_auto_hide">Automatyczne ukrywanie</string>
@@ -477,7 +477,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="kpm_autoload_first_time_confirm">Rozumiem</string>
     <string name="kpm_autoload_do_not_show_again">Nie pokazuj ponownie</string>
     <!-- APM Bulk Install Strings -->
-    <string name="apm_bulk_install_title">Instalacja zbiorcza APM</string>
+    <string name="apm_bulk_install_title">Instalacja zbiorcza modułów systemowych</string>
     <string name="apm_bulk_install_list_title">Lista modułów</string>
     <string name="apm_bulk_install_add">Dodaj moduły</string>
     <string name="apm_bulk_install_empty">Brak dodanych modułów</string>
@@ -715,7 +715,7 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="enable_badge_count">Ustawienia licznika odznak</string>
     <string name="enable_badge_count_summary">Skonfiguruj wyświetlanie licznika odznak dla elementów nawigacyjnych</string>
     <string name="badge_superuser">Pokaż odznakę Superuser</string>
-    <string name="badge_apm">Pokaż odznakę APM</string>
+    <string name="badge_apm">Pokaż odznakę modułu systemowego</string>
     <string name="badge_kernel">Pokaż odznakę modułu jądra</string>
     <string name="settings_sound_effect">Efekt dźwiękowy</string>
     <string name="settings_sound_effect_summary">Odtwarzaj dźwięk przy kliknięciu</string>
@@ -881,6 +881,6 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="home_stats_manager_label">Menedżer</string>
     <string name="home_device_status_gpu_load">GPU</string>
     <string name="home_stats_kernel_modules">Moduły jądra</string>
-    <string name="home_stats_apm_modules">Moduły APM</string>
+    <string name="home_stats_apm_modules">Moduły systemowe</string>
     <string name="home_stats_superusers">Superużytkownicy</string>
 </resources>

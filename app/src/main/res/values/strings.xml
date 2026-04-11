@@ -25,7 +25,7 @@
     <string name="settings_nav_mode_bottom">Always Bottom Bar</string>
     <string name="settings_nav_mode_rail">Always Side Rail</string>
     <string name="settings_nav_mode_floating">Floating Bottom Bar</string>
-    <string name="settings_show_apm">Show APM</string>
+    <string name="settings_show_apm">Show System Modules</string>
     <string name="settings_show_kpm">Show KPM</string>
     <string name="settings_show_superuser">Show SuperUser</string>
     <string name="settings_floating_auto_hide">Auto-hide Floating Bar</string>
@@ -209,7 +209,7 @@
     <string name="su_show_system_apps">Show system apps</string>
     <string name="su_hide_system_apps">Hide system apps</string>
     <string name="su_refresh">Refresh</string>
-    <string name="apm">APModule</string>
+    <string name="apm">System Module</string>
 
 
     <string name="apm_not_installed">AndroidPatch not installed</string>
@@ -577,7 +577,7 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="apm_copy_list_success">Module list copied</string>
 
     <!-- APM Bulk Install Strings -->
-    <string name="apm_bulk_install_title">APM Bulk Install</string>
+    <string name="apm_bulk_install_title">System Module Bulk Install</string>
     <string name="apm_bulk_install_list_title">Modules List</string>
     <string name="apm_bulk_install_add">Add Modules</string>
     <string name="apm_bulk_install_empty">No modules added</string>
@@ -884,7 +884,7 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="enable_badge_count">Badge Count Settings</string>
     <string name="enable_badge_count_summary">Configure badge count display for navigation items</string>
     <string name="badge_superuser">Show SuperUser Badge</string>
-    <string name="badge_apm">Show APM Badge</string>
+    <string name="badge_apm">Show System Module Badge</string>
     <string name="badge_kernel">Show Kernel Module Badge</string>
     <string name="settings_sound_effect">Sound Effect</string>
     <string name="settings_sound_effect_summary">Play sound effect on click</string>
@@ -1005,6 +1005,6 @@ Please ensure the app is completely closed and reopened for the commands to exec
     <string name="home_stats_manager_label">Manager</string>
     <string name="home_device_status_gpu_load">GPU</string>
     <string name="home_stats_kernel_modules">Kernel Modules</string>
-    <string name="home_stats_apm_modules">APM Modules</string>
+    <string name="home_stats_apm_modules">System Modules</string>
     <string name="home_stats_superusers">Superusers</string>
 </resources>

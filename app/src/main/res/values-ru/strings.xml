@@ -28,7 +28,7 @@
     <string name="settings_nav_mode_bottom">Всегда нижняя панель</string>
     <string name="settings_nav_mode_rail">Всегда боковая панель</string>
     <string name="settings_nav_mode_floating">Плавающая нижняя панель</string>
-    <string name="settings_show_apm">Показать APM</string>
+    <string name="settings_show_apm">Показать системные модули</string>
     <string name="settings_show_kpm">Показать KPM</string>
     <string name="settings_show_superuser">Показать Суперпользователя</string>
     <string name="settings_floating_auto_hide">Автоскрытие панели</string>
@@ -209,7 +209,7 @@
     <string name="su_hide_system_apps">Скрыть системные приложения</string>
     <string name="su_refresh">Обновить</string>
 
-    <string name="apm">APModule</string>
+    <string name="apm">Системный модуль</string>
     <string name="apm_not_installed">AndroidPatch не установлен</string>
     <string name="apm_failed_to_enable">Не удалось включить модуль: %s</string>
     <string name="apm_failed_to_disable">Не удалось отключить модуль: %s</string>
@@ -543,7 +543,7 @@
     <string name="kpm_autoload_do_not_show_again">Не показывать снова</string>
 
     <!-- APM Bulk Install Strings -->
-    <string name="apm_bulk_install_title">Массовая установка APM</string>
+    <string name="apm_bulk_install_title">Массовая установка системных модулей</string>
     <string name="apm_bulk_install_list_title">Список модулей</string>
     <string name="apm_bulk_install_add">Добавить модули</string>
     <string name="apm_bulk_install_empty">Нет добавленных модулей</string>
@@ -794,7 +794,7 @@
     <string name="enable_badge_count">Настройки счётчика значков</string>
     <string name="enable_badge_count_summary">Настройка отображения счётчика значков для элементов навигации</string>
     <string name="badge_superuser">Показывать значок суперпользователя</string>
-    <string name="badge_apm">Показывать значок APM</string>
+    <string name="badge_apm">Показывать значок системного модуля</string>
     <string name="badge_kernel">Показывать значок модуля ядра</string>
     <string name="settings_sound_effect">Звуковой эффект</string>
     <string name="settings_sound_effect_summary">Воспроизводить звук при нажатии</string>
@@ -964,6 +964,6 @@
     <string name="home_stats_manager_label">Менеджер</string>
     <string name="home_device_status_gpu_load">GPU</string>
     <string name="home_stats_kernel_modules">Модули ядра</string>
-    <string name="home_stats_apm_modules">Модули APM</string>
+    <string name="home_stats_apm_modules">Системные модули</string>
     <string name="home_stats_superusers">Суперпользователи</string>
 </resources>
