@@ -133,6 +133,8 @@
     <string name="patch_item_extra_event">触发事件:</string>
     <string name="patch_item_skey">心之密钥</string>
     <string name="patch_item_set_skey_label">心之密钥长度应为8-63个字符，包含星光和月辉，不能含有混沌之力。</string>
+    <string name="patch_confirm_superkey">再次凝炼心之密钥</string>
+    <string name="patch_skey_mismatch">两次心之密钥不契合</string>
 
     <string name="home_kernel">心之核心等级</string>
     <string name="home_manager_version">契约管理器等级</string>
@@ -519,7 +521,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">心之结晶自动觉醒</string>
     <string name="kpm_autoload_enabled">启用结晶自主觉醒</string>
-    <string name="kpm_autoload_enabled_summary">应用启动时自动激活心之结晶</string>
+    <string name="kpm_autoload_enabled_summary">开机时自动激活心之结晶</string>
     <string name="kpm_autoload_json_config">星界咒语配置</string>
     <string name="kpm_autoload_json_label">星界咒语</string>
     <string name="kpm_autoload_json_placeholder">{

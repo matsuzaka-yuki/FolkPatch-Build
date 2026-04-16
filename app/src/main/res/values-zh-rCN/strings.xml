@@ -149,6 +149,8 @@
     <string name="patch_item_extra_event">事件:</string>
     <string name="patch_item_skey">超级密钥</string>
     <string name="patch_item_set_skey_label">超级密钥长度应为 8-63 个字符，包含数字和字母，不能包含特殊字符。</string>
+    <string name="patch_confirm_superkey">确认超级密钥</string>
+    <string name="patch_skey_mismatch">两次输入的超级密钥不一致</string>
 
     <string name="home_kernel">内核版本</string>
     <string name="home_manager_version">管理器版本</string>
@@ -523,7 +525,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">KPM自动加载</string>
     <string name="kpm_autoload_enabled">启用自动加载</string>
-    <string name="kpm_autoload_enabled_summary">应用启动时自动加载KPM模块</string>
+    <string name="kpm_autoload_enabled_summary">开机时自动加载KPM模块</string>
     <string name="kpm_autoload_json_config">JSON配置</string>
     <string name="kpm_autoload_json_label">JSON配置</string>
     <string name="kpm_autoload_json_placeholder">{

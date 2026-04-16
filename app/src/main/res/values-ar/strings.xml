@@ -166,6 +166,8 @@
     <string name="patch_item_extra_event">الحدث:</string>
     <string name="patch_item_skey">المفتاح الخارق</string>
     <string name="patch_item_set_skey_label">يجب أن يتراوح طول المفتاح الخارق بين 8 و 63 حرفًا وأن يتضمن أرقامًا وحروفًا، ولكن بدون أحرف خاصة.</string>
+    <string name="patch_confirm_superkey">تأكيد المفتاح الخارق</string>
+    <string name="patch_skey_mismatch">المفتاح الخارق غير متطابق</string>
 
     <string name="home_kernel">إصدار النواة</string>
     <string name="home_manager_version">إصدار المدير</string>
@@ -522,7 +524,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">التحميل التلقائي لـ KPM</string>
     <string name="kpm_autoload_enabled">تمكين التحميل التلقائي</string>
-    <string name="kpm_autoload_enabled_summary">تحميل وحدات KPM تلقائيًا عند بدء تشغيل التطبيق</string>
+    <string name="kpm_autoload_enabled_summary">تحميل وحدات KPM تلقائيًا عند بدء تشغيل الجهاز</string>
     <string name="kpm_autoload_json_config">تكوين JSON</string>
     <string name="kpm_autoload_json_label">تكوين JSON</string>
 <string name="kpm_autoload_json_placeholder">{

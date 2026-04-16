@@ -149,6 +149,8 @@
     <string name="patch_item_extra_event">烹饪事件:</string>
     <string name="patch_item_skey">传世秘方</string>
     <string name="patch_item_set_skey_label">传世秘方长度应为 8-63 个字符，包含数字和字母，不能包含特殊符号。</string>
+    <string name="patch_confirm_superkey">再次确认传世秘方</string>
+    <string name="patch_skey_mismatch">两次传世秘方不一致</string>
 
     <string name="home_kernel">核心食材版本</string>
     <string name="home_manager_version">餐厅经理版本</string>
@@ -522,7 +524,7 @@
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">酱料自动添加</string>
     <string name="kpm_autoload_enabled">启用自动添加</string>
-    <string name="kpm_autoload_enabled_summary">餐厅启动时自动添加酱料</string>
+    <string name="kpm_autoload_enabled_summary">开餐时自动添加酱料</string>
     <string name="kpm_autoload_json_config">JSON 菜谱配置</string>
     <string name="kpm_autoload_json_label">JSON 菜谱配置</string>
     <string name="kpm_autoload_json_placeholder">{

@@ -150,6 +150,8 @@
     <string name="patch_item_extra_event">触发事件:</string>
     <string name="patch_item_skey">OP密钥</string>
     <string name="patch_item_set_skey_label">OP密钥需要8-63个字符，只能用数字和字母，别夹带特殊符号进去</string>
+    <string name="patch_confirm_superkey">再输一次OP密钥</string>
+    <string name="patch_skey_mismatch">两次OP密钥对不上啊</string>
 
     <string name="home_kernel">基岩核心</string>
     <string name="home_manager_version">管理器版本</string>
@@ -522,7 +524,7 @@
     <!-- KPM 自动加载 -->
     <string name="kpm_autoload_title">红石组件自动充能</string>
     <string name="kpm_autoload_enabled">开启自动充能</string>
-    <string name="kpm_autoload_enabled_summary">服务器启动时自动给红石组件充能</string>
+    <string name="kpm_autoload_enabled_summary">世界加载时自动给红石组件充能</string>
     <string name="kpm_autoload_json_config">JSON配置</string>
     <string name="kpm_autoload_json_label">JSON配置</string>
     <string name="kpm_autoload_json_placeholder">{

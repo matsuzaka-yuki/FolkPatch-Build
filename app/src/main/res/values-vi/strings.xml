@@ -133,6 +133,8 @@
     <string name="patch_item_extra_event">Sự kiện:</string>
     <string name="patch_item_skey">Khóa siêu cấp</string>
     <string name="patch_item_set_skey_label">Độ dài khóa siêu cấp phải từ 8-63 ký tự, bao gồm chữ số và chữ cái, không chứa ký tự đặc biệt.</string>
+    <string name="patch_confirm_superkey">Xác nhận khóa siêu cấp</string>
+    <string name="patch_skey_mismatch">Khóa siêu cấp không khớp</string>
 
     <string name="home_kernel">Phiên bản nhân</string>
     <string name="home_manager_version">Phiên bản trình quản lý</string>
@@ -531,7 +533,7 @@ Dưới đây là một số nguyên nhân có thể gây ra thất bại xác t
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">Tải tự động KPM</string>
     <string name="kpm_autoload_enabled">Bật tải tự động</string>
-    <string name="kpm_autoload_enabled_summary">Tự động tải module KPM khi ứng dụng khởi chạy</string>
+    <string name="kpm_autoload_enabled_summary">Tự động tải module KPM khi khởi động máy</string>
     <string name="kpm_autoload_json_config">Cấu hình JSON</string>
     <string name="kpm_autoload_json_label">Cấu hình JSON</string>
     <string name="kpm_autoload_json_placeholder">{
