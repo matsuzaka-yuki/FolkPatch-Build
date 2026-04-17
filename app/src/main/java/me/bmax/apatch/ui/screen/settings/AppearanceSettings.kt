@@ -459,29 +459,6 @@ fun AppearanceSettingsContent(
         if (isFloatingNav) {
             ToggleSettingCard(
                 flat = flat,
-                title = stringResource(id = R.string.settings_floating_auto_hide),
-                description = stringResource(id = R.string.settings_floating_auto_hide_summary),
-                checked = floatingAutoHide,
-                onCheckedChange = {
-                    floatingAutoHide = it
-                    prefs.edit().putBoolean("floating_auto_hide", it).apply()
-                },
-            )
-            Spacer(Modifier.height(8.dp))
-            ToggleSettingCard(
-                flat = flat,
-                title = stringResource(id = R.string.settings_floating_swipe_hide),
-                description = stringResource(id = R.string.settings_floating_swipe_hide_summary),
-                checked = floatingSwipeHide,
-                onCheckedChange = {
-                    floatingSwipeHide = it
-                    prefs.edit().putBoolean("floating_swipe_hide", it).apply()
-                },
-            )
-            Spacer(Modifier.height(8.dp))
-
-            ToggleSettingCard(
-                flat = flat,
                 title = stringResource(id = R.string.settings_navbar_glass_effect),
                 description = stringResource(id = R.string.settings_navbar_glass_effect_summary),
                 checked = BackgroundConfig.isNavBarGlassEnabled,
@@ -589,6 +566,29 @@ fun AppearanceSettingsContent(
                 )
                 Spacer(Modifier.height(8.dp))
             }
+
+            ToggleSettingCard(
+                flat = flat,
+                title = stringResource(id = R.string.settings_floating_auto_hide),
+                description = stringResource(id = R.string.settings_floating_auto_hide_summary),
+                checked = floatingAutoHide,
+                onCheckedChange = {
+                    floatingAutoHide = it
+                    prefs.edit().putBoolean("floating_auto_hide", it).apply()
+                },
+            )
+            Spacer(Modifier.height(8.dp))
+            ToggleSettingCard(
+                flat = flat,
+                title = stringResource(id = R.string.settings_floating_swipe_hide),
+                description = stringResource(id = R.string.settings_floating_swipe_hide_summary),
+                checked = floatingSwipeHide,
+                onCheckedChange = {
+                    floatingSwipeHide = it
+                    prefs.edit().putBoolean("floating_swipe_hide", it).apply()
+                },
+            )
+            Spacer(Modifier.height(8.dp))
         }
 
         if (isListStyle) {
