@@ -14,6 +14,8 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
@@ -81,6 +83,15 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ramcosta.composedestinations.generated.destinations.InstallScreenDestination
 import com.ramcosta.composedestinations.generated.destinations.ApmBulkInstallScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.AppearanceSettingsScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.BackupSettingsScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.BehaviorSettingsScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.FunctionSettingsScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.GeneralSettingsScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.ModuleSettingsScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.MultimediaSettingsScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.SecuritySettingsScreenDestination
+import com.ramcosta.composedestinations.generated.destinations.SettingScreenDestination
 import coil.Coil
 import coil.ImageLoader
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -109,6 +120,7 @@ import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.foundation.layout.Box
@@ -122,7 +134,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.window.DialogProperties
 import me.bmax.apatch.R
 import androidx.compose.runtime.LaunchedEffect
@@ -131,6 +149,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.coroutineScope
 import kotlin.system.exitProcess
 import me.zhanghai.android.appiconloader.coil.AppIconKeyer
 import me.bmax.apatch.util.UpdateChecker
@@ -145,6 +164,10 @@ import android.widget.Toast
 
 import me.bmax.apatch.ui.screen.settings.ThemeImportDialog
 import me.bmax.apatch.util.BiometricUtils
+import me.bmax.apatch.util.ui.navBarGlassEffect
+import me.bmax.apatch.util.ui.navBarLiquefiable
+import me.bmax.apatch.util.ui.rememberNavBarGlassLiquidState
+import me.bmax.apatch.util.ui.isRealTimeBlurAvailable
 
 data class ScrollState(
     val isScrollingDown: MutableState<Boolean>,
@@ -427,6 +450,19 @@ class MainActivity : AppCompatActivity() {
             val bottomBarRoutes = remember {
                 BottomBarDestination.entries.map { it.direction.route }.toSet()
             }
+            val settingsRoutes = remember {
+                setOf(
+                    SettingScreenDestination.route,
+                    GeneralSettingsScreenDestination.route,
+                    AppearanceSettingsScreenDestination.route,
+                    BehaviorSettingsScreenDestination.route,
+                    SecuritySettingsScreenDestination.route,
+                    BackupSettingsScreenDestination.route,
+                    ModuleSettingsScreenDestination.route,
+                    FunctionSettingsScreenDestination.route,
+                    MultimediaSettingsScreenDestination.route,
+                )
+            }
 
             LaunchedEffect(pendingActionModuleId) {
                 val id = pendingActionModuleId
@@ -703,6 +739,16 @@ class MainActivity : AppCompatActivity() {
                         Box(modifier = Modifier.fillMaxSize()) {
                             val bottomBarVisibleState = remember { mutableStateOf(showBottomBar) }
                             bottomBarVisibleState.value = showBottomBar
+                            val shouldExposeContentToLiquid = currentRoute !in settingsRoutes
+                            val floatingLiquidState = if (
+                                isFloatingMode &&
+                                showBottomBar &&
+                                isOnMainTabPage &&
+                                BackgroundConfig.isNavBarGlassEnabled &&
+                                isRealTimeBlurAvailable()
+                            ) {
+                                rememberNavBarGlassLiquidState()
+                            } else null
 
                             CompositionLocalProvider(
                                 LocalSnackbarHost provides snackBarHostState,
@@ -717,6 +763,9 @@ class MainActivity : AppCompatActivity() {
                                 DestinationsNavHost(
                                     modifier = Modifier
                                         .fillMaxSize()
+                                        .navBarLiquefiable(
+                                            if (shouldExposeContentToLiquid) floatingLiquidState else null
+                                        )
                                         .then(
                                             if (isFloatingMode) Modifier.nestedScroll(
                                                 rememberScrollConnection(
@@ -747,7 +796,8 @@ class MainActivity : AppCompatActivity() {
                                         navController = navController,
                                         isFloating = true,
                                         lastValidSelection = lastValidNavbarSelection,
-                                        onUserInteraction = { resetBottomBarAutoHide() }
+                                        onUserInteraction = { resetBottomBarAutoHide() },
+                                        liquidState = floatingLiquidState
                                     )
                                 }
                             } else {
@@ -787,7 +837,8 @@ private fun BottomBar(
     navController: NavHostController,
     isFloating: Boolean = false,
     lastValidSelection: MutableState<Int> = mutableStateOf(0),
-    onUserInteraction: (() -> Unit)? = null
+    onUserInteraction: (() -> Unit)? = null,
+    liquidState: io.github.fletchmckee.liquid.LiquidState? = null
 ) {
     val context = LocalContext.current
     val state by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
@@ -865,16 +916,50 @@ private fun BottomBar(
 
         // Use current selection if on navbar, otherwise use last valid selection
         val effectiveSelectedIndex = if (selectedIndex != -1) selectedIndex else lastValidSelection.value
+        val isGlassEnabled = isFloating && BackgroundConfig.isNavBarGlassEnabled
 
-        // Animate the indicator position with jelly/spring effect
-        val animatedSelectedIndex by animateFloatAsState(
-            targetValue = effectiveSelectedIndex.toFloat(),
-            animationSpec = spring(
-                dampingRatio = Spring.DampingRatioMediumBouncy,
-                stiffness = Spring.StiffnessLow
-            ),
-            label = "selectedIndex"
-        )
+        val animatedSelectedIndex = remember { Animatable(effectiveSelectedIndex.toFloat()) }
+        val previousEffectiveSelectedIndex = remember { mutableStateOf(effectiveSelectedIndex) }
+        val moveDirection = remember { mutableStateOf(0f) }
+        val liquidMotion = remember { Animatable(0f) }
+
+        LaunchedEffect(effectiveSelectedIndex, isGlassEnabled) {
+            if (isGlassEnabled) {
+                val previous = previousEffectiveSelectedIndex.value
+                moveDirection.value = (effectiveSelectedIndex - previous).toFloat().coerceIn(-1f, 1f)
+                previousEffectiveSelectedIndex.value = effectiveSelectedIndex
+                liquidMotion.snapTo(1f)
+                coroutineScope {
+                    launch {
+                        animatedSelectedIndex.animateTo(
+                            targetValue = effectiveSelectedIndex.toFloat(),
+                            animationSpec = spring(
+                                dampingRatio = Spring.DampingRatioLowBouncy,
+                                stiffness = Spring.StiffnessVeryLow,
+                            )
+                        )
+                    }
+                    launch {
+                        liquidMotion.animateTo(
+                            targetValue = 0f,
+                            animationSpec = tween(durationMillis = 520)
+                        )
+                    }
+                }
+                moveDirection.value = 0f
+            } else {
+                previousEffectiveSelectedIndex.value = effectiveSelectedIndex
+                moveDirection.value = 0f
+                liquidMotion.snapTo(0f)
+                animatedSelectedIndex.animateTo(
+                    targetValue = effectiveSelectedIndex.toFloat(),
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessLow,
+                    )
+                )
+            }
+        }
 
         val containerColor = if (BackgroundConfig.isCustomBackgroundEnabled) {
             MaterialTheme.colorScheme.surface.copy(alpha = BackgroundConfig.customBackgroundOpacity)
@@ -883,8 +968,6 @@ private fun BottomBar(
         }
 
         if (isFloating) {
-            // Floating mode: use Surface with shadow and rounded corners
-            // Responsive padding based on screen width
             BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -896,9 +979,9 @@ private fun BottomBar(
             ) {
                 val screenWidth = maxWidth
                 val horizontalScreenPadding = when {
-                    screenWidth > 600.dp -> 32.dp // Tablet/Large screen
-                    screenWidth > 400.dp -> 24.dp // Normal phone
-                    else -> 16.dp // Small phone
+                    screenWidth > 600.dp -> 32.dp
+                    screenWidth > 400.dp -> 24.dp
+                    else -> 16.dp
                 }
 
                 Box(
@@ -908,28 +991,65 @@ private fun BottomBar(
                     contentAlignment = Alignment.Center
                 ) {
                     val isCustomBg = BackgroundConfig.isCustomBackgroundEnabled
-                    Surface(
-                        modifier = Modifier.wrapContentWidth(),
-                        shape = MaterialTheme.shapes.large,
-                        color = containerColor,
-                        tonalElevation = if (isCustomBg) 0.dp else 3.dp,
-                        shadowElevation = if (isCustomBg) 0.dp else 8.dp
-                    ) {
-                        BottomBarContent(
-                            visibleDestinations = visibleDestinations,
-                            effectiveSelectedIndex = effectiveSelectedIndex,
-                            animatedSelectedIndex = animatedSelectedIndex,
-                            superuserCount = superuserCount,
-                            apmModuleCount = apmModuleCount,
-                            kernelModuleCount = kernelModuleCount,
-                            enableSuperUserBadge = enableSuperUserBadge,
-                            enableApmBadge = enableApmBadge,
-                            enableKernelBadge = enableKernelBadge,
-                            currentRoute = currentRoute,
-                            navController = navController,
-                            context = context,
-                            onUserInteraction = onUserInteraction
-                        )
+                    if (isGlassEnabled) {
+                        val glassShape = CircleShape
+                        Surface(
+                            modifier = Modifier
+                                .wrapContentWidth()
+                                .clip(glassShape)
+                                .navBarGlassEffect(
+                                    shape = glassShape,
+                                    liquidState = liquidState,
+                                ),
+                            shape = glassShape,
+                            color = Color.Transparent,
+                            tonalElevation = 0.dp,
+                            shadowElevation = 0.dp
+                        ) {
+                            BottomBarContent(
+                                visibleDestinations = visibleDestinations,
+                                effectiveSelectedIndex = effectiveSelectedIndex,
+                                animatedSelectedIndex = animatedSelectedIndex.value,
+                                moveDirection = moveDirection.value,
+                                liquidMotion = liquidMotion.value,
+                                superuserCount = superuserCount,
+                                apmModuleCount = apmModuleCount,
+                                kernelModuleCount = kernelModuleCount,
+                                enableSuperUserBadge = enableSuperUserBadge,
+                                enableApmBadge = enableApmBadge,
+                                enableKernelBadge = enableKernelBadge,
+                                currentRoute = currentRoute,
+                                navController = navController,
+                                context = context,
+                                onUserInteraction = onUserInteraction
+                            )
+                        }
+                    } else {
+                        Surface(
+                            modifier = Modifier.wrapContentWidth(),
+                            shape = MaterialTheme.shapes.large,
+                            color = containerColor,
+                            tonalElevation = if (isCustomBg) 0.dp else 3.dp,
+                            shadowElevation = if (isCustomBg) 0.dp else 8.dp
+                        ) {
+                            BottomBarContent(
+                                visibleDestinations = visibleDestinations,
+                                effectiveSelectedIndex = effectiveSelectedIndex,
+                                animatedSelectedIndex = animatedSelectedIndex.value,
+                                moveDirection = moveDirection.value,
+                                liquidMotion = liquidMotion.value,
+                                superuserCount = superuserCount,
+                                apmModuleCount = apmModuleCount,
+                                kernelModuleCount = kernelModuleCount,
+                                enableSuperUserBadge = enableSuperUserBadge,
+                                enableApmBadge = enableApmBadge,
+                                enableKernelBadge = enableKernelBadge,
+                                currentRoute = currentRoute,
+                                navController = navController,
+                                context = context,
+                                onUserInteraction = onUserInteraction
+                            )
+                        }
                     }
                 }
             }
@@ -1014,6 +1134,8 @@ private fun BottomBarContent(
     visibleDestinations: List<BottomBarDestination>,
     effectiveSelectedIndex: Int,
     animatedSelectedIndex: Float,
+    moveDirection: Float = 0f,
+    liquidMotion: Float = 0f,
     superuserCount: Int,
     apmModuleCount: Int,
     kernelModuleCount: Int,
@@ -1029,6 +1151,34 @@ private fun BottomBarContent(
     val itemSize = 56.dp
     val itemSpacing = 4.dp
     val containerPadding = 7.dp
+    val itemShape = if (BackgroundConfig.isNavBarGlassEnabled) CircleShape else MaterialTheme.shapes.large
+    val isGlassEnabled = BackgroundConfig.isNavBarGlassEnabled
+    val indicatorHorizontalPadding by animateDpAsState(
+        targetValue = if (isGlassEnabled) 3.dp else 0.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioLowBouncy,
+            stiffness = Spring.StiffnessLow,
+        ),
+        label = "indicatorHorizontalPadding"
+    )
+    val indicatorScale by animateFloatAsState(
+        targetValue = if (isGlassEnabled) 1.06f else 1f,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow,
+        ),
+        label = "indicatorScale"
+    )
+    val waterStretch by animateFloatAsState(
+        targetValue = if (isGlassEnabled) liquidMotion else 0f,
+        animationSpec = tween(durationMillis = 120),
+        label = "waterStretch"
+    )
+    val leadingDropAlpha by animateFloatAsState(
+        targetValue = if (isGlassEnabled) liquidMotion else 0f,
+        animationSpec = tween(durationMillis = 100),
+        label = "leadingDropAlpha"
+    )
 
     // Calculate exact width based on items
     val navBarWidth = (itemSize * visibleDestinations.size) +
@@ -1050,9 +1200,11 @@ private fun BottomBarContent(
                 val density = LocalDensity.current
                 val itemSizePx = with(density) { itemSize.toPx() }
                 val itemSpacingPx = with(density) { itemSpacing.toPx() }
+                val stretchPx = with(density) { (22.dp * waterStretch).toPx() }
 
                 // Calculate offset: each item position = (itemSize + spacing) * index
                 val indicatorOffset = (itemSizePx + itemSpacingPx) * animatedSelectedIndex
+                val stretchOffset = if (moveDirection < 0f) -stretchPx else 0f
 
                 Box(
                     modifier = Modifier
@@ -1064,15 +1216,49 @@ private fun BottomBarContent(
                                 y = 0
                             )
                         }
-                        .width(itemSize),
+                        .width(itemSize + indicatorHorizontalPadding * 2 + with(density) { stretchPx.toDp() })
+                        .graphicsLayer {
+                            translationX = stretchOffset
+                            scaleX = indicatorScale
+                            scaleY = if (isGlassEnabled) 1.02f else 1f
+                        },
                     contentAlignment = Alignment.Center
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(itemSize)
+                            .fillMaxHeight()
+                            .padding(horizontal = indicatorHorizontalPadding)
+                            .width(itemSize + with(density) { stretchPx.toDp() })
                             .background(
                                 color = MaterialTheme.colorScheme.secondaryContainer,
-                                shape = MaterialTheme.shapes.large
+                                shape = itemShape
+                            )
+                            .then(
+                                if (isGlassEnabled) {
+                                    Modifier.drawWithContent {
+                                        drawContent()
+                                        val dropRadius = size.height * 0.28f
+                                        val dropX = if (moveDirection >= 0f) {
+                                            size.width - dropRadius * 0.7f
+                                        } else {
+                                            dropRadius * 0.7f
+                                        }
+                                        drawRoundRect(
+                                            brush = Brush.radialGradient(
+                                                colors = listOf(
+                                                    Color.White.copy(alpha = 0.22f * leadingDropAlpha),
+                                                    Color.Transparent,
+                                                ),
+                                                center = Offset(dropX, size.height * 0.42f),
+                                                radius = dropRadius * 1.35f,
+                                            ),
+                                            size = Size(size.width, size.height),
+                                            cornerRadius = CornerRadius(size.height / 2f, size.height / 2f),
+                                        )
+                                    }
+                                } else {
+                                    Modifier
+                                }
                             )
                     )
                 }
@@ -1090,7 +1276,7 @@ private fun BottomBarContent(
                     Box(
                         modifier = Modifier
                             .size(itemSize)
-                            .clip(MaterialTheme.shapes.large)
+                            .clip(itemShape)
                             .clickable {
                                 onUserInteraction?.invoke()
                                 // If already on this destination, do nothing

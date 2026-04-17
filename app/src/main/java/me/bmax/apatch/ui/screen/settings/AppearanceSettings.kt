@@ -479,6 +479,116 @@ fun AppearanceSettingsContent(
                 },
             )
             Spacer(Modifier.height(8.dp))
+
+            ToggleSettingCard(
+                flat = flat,
+                title = stringResource(id = R.string.settings_navbar_glass_effect),
+                description = stringResource(id = R.string.settings_navbar_glass_effect_summary),
+                checked = BackgroundConfig.isNavBarGlassEnabled,
+                onCheckedChange = {
+                    BackgroundConfig.setNavBarGlassEnabledState(it)
+                    BackgroundConfig.save(context)
+                },
+            )
+            Spacer(Modifier.height(8.dp))
+
+            if (BackgroundConfig.isNavBarGlassEnabled) {
+                ExpressiveCard(flat = flat) {
+                    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                        Text(
+                            text = stringResource(id = R.string.settings_navbar_glass_blur_strength),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Slider(
+                            value = BackgroundConfig.navBarGlassBlurStrength,
+                            onValueChange = { BackgroundConfig.setNavBarGlassBlurStrengthValue(it) },
+                            onValueChangeFinished = { BackgroundConfig.save(context) },
+                            valueRange = 0f..1f,
+                            colors = SliderDefaults.colors(
+                                thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
+                                activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
+                            ),
+                        )
+                    }
+                }
+                Spacer(Modifier.height(8.dp))
+
+                ExpressiveCard(flat = flat) {
+                    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                        Text(
+                            text = stringResource(id = R.string.settings_navbar_glass_transparency),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Slider(
+                            value = BackgroundConfig.navBarGlassTransparency,
+                            onValueChange = { BackgroundConfig.setNavBarGlassTransparencyValue(it) },
+                            onValueChangeFinished = { BackgroundConfig.save(context) },
+                            valueRange = 0f..1f,
+                            colors = SliderDefaults.colors(
+                                thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
+                                activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
+                            ),
+                        )
+                    }
+                }
+                Spacer(Modifier.height(8.dp))
+
+                ExpressiveCard(flat = flat) {
+                    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                        Text(
+                            text = stringResource(id = R.string.settings_navbar_glass_highlight_strength),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Slider(
+                            value = BackgroundConfig.navBarGlassHighlightStrength,
+                            onValueChange = { BackgroundConfig.setNavBarGlassHighlightStrengthValue(it) },
+                            onValueChangeFinished = { BackgroundConfig.save(context) },
+                            valueRange = 0f..1f,
+                            colors = SliderDefaults.colors(
+                                thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
+                                activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
+                            ),
+                        )
+                    }
+                }
+                Spacer(Modifier.height(8.dp))
+
+                ToggleSettingCard(
+                    flat = flat,
+                    title = stringResource(id = R.string.settings_navbar_glass_specular),
+                    description = stringResource(id = R.string.settings_navbar_glass_specular_summary),
+                    checked = BackgroundConfig.isNavBarGlassSpecularEnabled,
+                    onCheckedChange = {
+                        BackgroundConfig.setNavBarGlassSpecularEnabledState(it)
+                        BackgroundConfig.save(context)
+                    },
+                )
+                Spacer(Modifier.height(8.dp))
+
+                ToggleSettingCard(
+                    flat = flat,
+                    title = stringResource(id = R.string.settings_navbar_glass_inner_glow),
+                    description = stringResource(id = R.string.settings_navbar_glass_inner_glow_summary),
+                    checked = BackgroundConfig.isNavBarGlassInnerGlowEnabled,
+                    onCheckedChange = {
+                        BackgroundConfig.setNavBarGlassInnerGlowEnabledState(it)
+                        BackgroundConfig.save(context)
+                    },
+                )
+                Spacer(Modifier.height(8.dp))
+
+                ToggleSettingCard(
+                    flat = flat,
+                    title = stringResource(id = R.string.settings_navbar_glass_border),
+                    description = stringResource(id = R.string.settings_navbar_glass_border_summary),
+                    checked = BackgroundConfig.isNavBarGlassBorderEnabled,
+                    onCheckedChange = {
+                        BackgroundConfig.setNavBarGlassBorderEnabledState(it)
+                        BackgroundConfig.save(context)
+                    },
+                )
+                Spacer(Modifier.height(8.dp))
+            }
         }
 
         if (isListStyle) {
@@ -1530,8 +1640,7 @@ fun AppearanceSettingsContent(
                 Text(text = resetThemeTitle, style = MaterialTheme.typography.titleMedium)
             }
         }
-        Spacer(Modifier.height(8.dp))
-    }
+        }
 
     if (showHomeLayoutChooseDialog.value) {
         HomeLayoutChooseDialog(showHomeLayoutChooseDialog)

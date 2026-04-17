@@ -435,5 +435,7 @@ dependencies {
 
     implementation(libs.google.code.gson)
 
+    implementation(libs.liquid)
+
     compileOnly(libs.cxx)
 }

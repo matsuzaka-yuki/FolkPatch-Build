@@ -113,6 +113,22 @@ object BackgroundConfig {
         private set
     var titleImageOffsetX: Float by mutableStateOf(0f)
         private set
+
+    // NavBar Glass Effect (Floating mode only)
+    var isNavBarGlassEnabled: Boolean by mutableStateOf(false)
+        private set
+    var navBarGlassBlurStrength: Float by mutableStateOf(0.7f)
+        private set
+    var navBarGlassTransparency: Float by mutableStateOf(0.3f)
+        private set
+    var navBarGlassHighlightStrength: Float by mutableStateOf(0.5f)
+        private set
+    var isNavBarGlassSpecularEnabled: Boolean by mutableStateOf(true)
+        private set
+    var isNavBarGlassInnerGlowEnabled: Boolean by mutableStateOf(true)
+        private set
+    var isNavBarGlassBorderEnabled: Boolean by mutableStateOf(true)
+        private set
     
     private const val PREFS_NAME = "background_settings"
     private const val KEY_CUSTOM_BACKGROUND_URI = "custom_background_uri"
@@ -165,6 +181,14 @@ object BackgroundConfig {
     private const val KEY_TITLE_IMAGE_NIGHT_OPACITY = "title_image_night_opacity"
     private const val KEY_TITLE_IMAGE_DIM = "title_image_dim"
     private const val KEY_TITLE_IMAGE_OFFSET_X = "title_image_offset_x"
+
+    private const val KEY_NAVBAR_GLASS_ENABLED = "navbar_glass_enabled"
+    private const val KEY_NAVBAR_GLASS_BLUR_STRENGTH = "navbar_glass_blur_strength"
+    private const val KEY_NAVBAR_GLASS_TRANSPARENCY = "navbar_glass_transparency"
+    private const val KEY_NAVBAR_GLASS_HIGHLIGHT_STRENGTH = "navbar_glass_highlight_strength"
+    private const val KEY_NAVBAR_GLASS_SPECULAR_ENABLED = "navbar_glass_specular_enabled"
+    private const val KEY_NAVBAR_GLASS_INNER_GLOW_ENABLED = "navbar_glass_inner_glow_enabled"
+    private const val KEY_NAVBAR_GLASS_BORDER_ENABLED = "navbar_glass_border_enabled"
 
     private const val TAG = "BackgroundConfig"
     
@@ -444,6 +468,34 @@ object BackgroundConfig {
     fun setTitleImageOffsetXValue(offset: Float) {
         titleImageOffsetX = offset
     }
+
+    fun setNavBarGlassEnabledState(enabled: Boolean) {
+        isNavBarGlassEnabled = enabled
+    }
+
+    fun setNavBarGlassBlurStrengthValue(strength: Float) {
+        navBarGlassBlurStrength = strength
+    }
+
+    fun setNavBarGlassTransparencyValue(transparency: Float) {
+        navBarGlassTransparency = transparency
+    }
+
+    fun setNavBarGlassHighlightStrengthValue(strength: Float) {
+        navBarGlassHighlightStrength = strength
+    }
+
+    fun setNavBarGlassSpecularEnabledState(enabled: Boolean) {
+        isNavBarGlassSpecularEnabled = enabled
+    }
+
+    fun setNavBarGlassInnerGlowEnabledState(enabled: Boolean) {
+        isNavBarGlassInnerGlowEnabled = enabled
+    }
+
+    fun setNavBarGlassBorderEnabledState(enabled: Boolean) {
+        isNavBarGlassBorderEnabled = enabled
+    }
     
     /**
      * 保存配置到SharedPreferences
@@ -501,6 +553,15 @@ object BackgroundConfig {
             putFloat(KEY_TITLE_IMAGE_NIGHT_OPACITY, titleImageNightOpacity)
             putFloat(KEY_TITLE_IMAGE_DIM, titleImageDim)
             putFloat(KEY_TITLE_IMAGE_OFFSET_X, titleImageOffsetX)
+
+            putBoolean(KEY_NAVBAR_GLASS_ENABLED, isNavBarGlassEnabled)
+            putFloat(KEY_NAVBAR_GLASS_BLUR_STRENGTH, navBarGlassBlurStrength)
+            putFloat(KEY_NAVBAR_GLASS_TRANSPARENCY, navBarGlassTransparency)
+            putFloat(KEY_NAVBAR_GLASS_HIGHLIGHT_STRENGTH, navBarGlassHighlightStrength)
+            putBoolean(KEY_NAVBAR_GLASS_SPECULAR_ENABLED, isNavBarGlassSpecularEnabled)
+            putBoolean(KEY_NAVBAR_GLASS_INNER_GLOW_ENABLED, isNavBarGlassInnerGlowEnabled)
+            putBoolean(KEY_NAVBAR_GLASS_BORDER_ENABLED, isNavBarGlassBorderEnabled)
+
             apply()
         }
     }
@@ -561,6 +622,14 @@ object BackgroundConfig {
         val titleNightOpacity = prefs.getFloat(KEY_TITLE_IMAGE_NIGHT_OPACITY, 1.0f)
         val titleDim = prefs.getFloat(KEY_TITLE_IMAGE_DIM, 0.0f)
         val titleOffsetX = prefs.getFloat(KEY_TITLE_IMAGE_OFFSET_X, 0f)
+
+        val navBarGlassEnabled = prefs.getBoolean(KEY_NAVBAR_GLASS_ENABLED, false)
+        val prefsNavBarGlassBlurStrength = prefs.getFloat(KEY_NAVBAR_GLASS_BLUR_STRENGTH, 0.7f)
+        val prefsNavBarGlassTransparency = prefs.getFloat(KEY_NAVBAR_GLASS_TRANSPARENCY, 0.3f)
+        val prefsNavBarGlassHighlightStrength = prefs.getFloat(KEY_NAVBAR_GLASS_HIGHLIGHT_STRENGTH, 0.5f)
+        val navBarGlassSpecularEnabled = prefs.getBoolean(KEY_NAVBAR_GLASS_SPECULAR_ENABLED, true)
+        val navBarGlassInnerGlowEnabled = prefs.getBoolean(KEY_NAVBAR_GLASS_INNER_GLOW_ENABLED, true)
+        val navBarGlassBorderEnabled = prefs.getBoolean(KEY_NAVBAR_GLASS_BORDER_ENABLED, true)
         
         Log.d(TAG, "加载背景配置: URI=$uri, enabled=$enabled, opacity=$opacity, dim=$dim")
         
@@ -612,6 +681,14 @@ object BackgroundConfig {
         titleImageNightOpacity = titleNightOpacity
         titleImageDim = titleDim
         titleImageOffsetX = titleOffsetX
+
+        isNavBarGlassEnabled = navBarGlassEnabled
+        navBarGlassBlurStrength = prefsNavBarGlassBlurStrength
+        navBarGlassTransparency = prefsNavBarGlassTransparency
+        navBarGlassHighlightStrength = prefsNavBarGlassHighlightStrength
+        isNavBarGlassSpecularEnabled = navBarGlassSpecularEnabled
+        isNavBarGlassInnerGlowEnabled = navBarGlassInnerGlowEnabled
+        isNavBarGlassBorderEnabled = navBarGlassBorderEnabled
     }
     
     /**
@@ -667,6 +744,14 @@ object BackgroundConfig {
         titleImageNightOpacity = 1.0f
         titleImageDim = 0.0f
         titleImageOffsetX = 0f
+
+        isNavBarGlassEnabled = false
+        navBarGlassBlurStrength = 0.7f
+        navBarGlassTransparency = 0.3f
+        navBarGlassHighlightStrength = 0.5f
+        isNavBarGlassSpecularEnabled = true
+        isNavBarGlassInnerGlowEnabled = true
+        isNavBarGlassBorderEnabled = true
     }
 }
 
