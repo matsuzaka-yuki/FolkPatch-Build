@@ -49,8 +49,9 @@ class OnlineModuleViewModel : ViewModel() {
 
     var isRefreshing by mutableStateOf(false)
         private set
-    
-    // Track which modules are being downloaded
+
+    var errorMessage by mutableStateOf<String?>(null)
+        private set
     private val downloadingModules = mutableSetOf<String>()
     
     // Track recently completed downloads to show completion messages
@@ -61,6 +62,7 @@ class OnlineModuleViewModel : ViewModel() {
     fun fetchModules() {
         viewModelScope.launch(Dispatchers.IO) {
             isRefreshing = true
+            errorMessage = null
             try {
                 val locale = Locale.getDefault()
                 val language = locale.language
@@ -100,9 +102,11 @@ class OnlineModuleViewModel : ViewModel() {
                     onSearchQueryChange(searchQuery)
                 } else {
                     Log.e(TAG, "Failed to fetch modules: ${response.code}")
+                    errorMessage = "Failed to fetch modules: HTTP ${response.code}"
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error fetching modules", e)
+                errorMessage = "Error: ${e.message}"
             } finally {
                 isRefreshing = false
             }

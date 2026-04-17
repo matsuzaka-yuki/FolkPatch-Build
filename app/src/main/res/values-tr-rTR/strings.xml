@@ -397,6 +397,9 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="theme_light">Açık</string>
     <string name="theme_dark">Koyu</string>
     <string name="theme_system">Sistem</string>
+    <string name="loading_modules">Modüller yükleniyor…</string>
+    <string name="loading_scripts">Betikler aranıyor…</string>
+    <string name="loading_themes">Temalar yükleniyor…</string>
 
     <string name="about_app_desc">Çekirdeği yeniden derlemeden kernel modüllerini ve kernel fonksiyon hook’larını destekleyen, kernel tabanlı bir root çözümü.</string>
     <string name="about_powered_by">%1$s tarafından desteklenmektedir</string>

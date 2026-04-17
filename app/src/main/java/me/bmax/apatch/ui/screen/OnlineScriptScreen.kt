@@ -111,8 +111,24 @@ fun OnlineScriptScreen(navigator: DestinationsNavigator) {
             .padding(innerPadding)) {
             if (viewModel.isRefreshing) {
                 AppLoadingIndicator(
+                    text = stringResource(R.string.loading_scripts),
                     modifier = Modifier.align(Alignment.Center)
                 )
+            } else if (viewModel.errorMessage != null) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = viewModel.errorMessage ?: "Unknown error",
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    Button(onClick = { viewModel.fetchModules() }) {
+                        Text(stringResource(R.string.retry))
+                    }
+                }
             } else {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),

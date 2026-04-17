@@ -333,12 +333,13 @@ fun ThemeStoreScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { paddingValues ->
         if (viewModel.isRefreshing) {
-            Column(
+            Box(
                 modifier = Modifier.fillMaxSize().padding(paddingValues),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                contentAlignment = Alignment.Center,
             ) {
-                AppLoadingIndicator()
+                AppLoadingIndicator(
+                    text = stringResource(R.string.loading_themes),
+                )
             }
         } else if (viewModel.errorMessage != null) {
             Column(
@@ -352,7 +353,7 @@ fun ThemeStoreScreen(
                     modifier = Modifier.padding(16.dp)
                 )
                 Button(onClick = { viewModel.fetchThemes() }) {
-                    Text("Retry")
+                    Text(stringResource(R.string.retry))
                 }
             }
         } else {

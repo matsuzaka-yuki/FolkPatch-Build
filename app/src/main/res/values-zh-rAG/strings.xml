@@ -413,6 +413,9 @@
     <string name="theme_light">浅色喵</string>
     <string name="theme_dark">深色喵</string>
     <string name="theme_system">系统喵</string>
+    <string name="loading_modules">正在获取模块喵…</string>
+    <string name="loading_scripts">正在查找脚本喵…</string>
+    <string name="loading_themes">正在加载主题喵…</string>
 
     <string name="about_app_desc">基于内核的Root方案哒喵，支持内核模块和hook，不用重编内核哦喵！</string>
     <string name="about_powered_by">靠 %s 撑着哒喵！</string>

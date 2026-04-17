@@ -50,9 +50,13 @@ class OnlineKPMViewModel : ViewModel() {
     var isRefreshing by mutableStateOf(false)
         private set
 
+    var errorMessage by mutableStateOf<String?>(null)
+        private set
+
     fun fetchModules() {
         viewModelScope.launch(Dispatchers.IO) {
             isRefreshing = true
+            errorMessage = null
             try {
                 val locale = Locale.getDefault()
                 val language = locale.language
@@ -92,9 +96,11 @@ class OnlineKPMViewModel : ViewModel() {
                     onSearchQueryChange(searchQuery)
                 } else {
                     Log.e(TAG, "Failed to fetch modules: ${response.code}")
+                    errorMessage = "Failed to fetch modules: HTTP ${response.code}"
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error fetching modules", e)
+                errorMessage = "Error: ${e.message}"
             } finally {
                 isRefreshing = false
             }

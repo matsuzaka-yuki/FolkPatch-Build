@@ -414,6 +414,12 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="github">GitHub</string>
     <string name="telegram">Telegram</string>
     
+    <!-- Loading Strings -->
+    <string name="loading_modules">Loading modules…</string>
+    <string name="loading_scripts">Finding scripts…</string>
+    <string name="loading_themes">Loading themes…</string>
+    <string name="retry">Retry</string>
+
     <!-- Online Module Strings -->
     <string name="online_module_title">Online System Module</string>
     <string name="online_module_download_start">Start downloading: %s</string>
