@@ -114,11 +114,11 @@ fun HomeScreenStats(
         Row(
             modifier = Modifier
                 .padding(innerPadding)
-                .padding(top = if (isWallpaperMode) 24.dp else 0.dp)
                 .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            if (isWallpaperMode) { Spacer(Modifier.height(8.dp)) }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 if (useGridTop) {
                     StatsGridTopSection(kpState, apState, navigator, showUninstallDialog, showAuthKeyDialog)
@@ -146,11 +146,11 @@ fun HomeScreenStats(
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .padding(top = if (isWallpaperMode) 24.dp else 0.dp)
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            if (isWallpaperMode) { Spacer(Modifier.height(8.dp)) }
             if (useGridTop) {
                 StatsGridTopSection(kpState, apState, navigator, showUninstallDialog, showAuthKeyDialog)
             } else {
