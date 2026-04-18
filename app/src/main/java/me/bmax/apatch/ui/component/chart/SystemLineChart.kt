@@ -1,5 +1,9 @@
 package me.bmax.apatch.ui.component.chart
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,21 +15,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.patrykandpatrick.vico.compose.chart.CartesianChartHost
-import com.patrykandpatrick.vico.compose.chart.layer.rememberLineCartesianLayer
-import com.patrykandpatrick.vico.compose.chart.layer.rememberLineSpec
-import com.patrykandpatrick.vico.compose.chart.rememberCartesianChart
-import com.patrykandpatrick.vico.compose.component.shape.shader.color
-import com.patrykandpatrick.vico.core.component.shape.shader.DynamicShaders
-import com.patrykandpatrick.vico.core.model.CartesianChartModelProducer
-import com.patrykandpatrick.vico.core.model.lineSeries
 
 @Composable
 fun SystemLineChart(
@@ -44,6 +47,23 @@ fun SystemLineChart(
     }
 
     val currentValue = dataPoints.lastOrNull() ?: 0f
+
+    val animatable = remember { Animatable(0f) }
+    var prevPoints by remember { mutableStateOf<List<ChartPoint>>(emptyList()) }
+    var currentPoints by remember { mutableStateOf<List<ChartPoint>>(emptyList()) }
+
+    LaunchedEffect(dataPoints) {
+        val newPoints = normalizePoints(dataPoints)
+        prevPoints = currentPoints
+        currentPoints = newPoints
+        animatable.snapTo(0f)
+        animatable.animateTo(
+            1f,
+            animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing)
+        )
+    }
+
+    val progress = animatable.value
 
     Box(
         modifier = modifier
@@ -77,31 +97,37 @@ fun SystemLineChart(
         )
 
         if (dataPoints.isNotEmpty()) {
-            val modelProducer = remember { CartesianChartModelProducer.build() }
-
-            LaunchedEffect(dataPoints) {
-                modelProducer.runTransaction {
-                    lineSeries {
-                        series(dataPoints)
-                    }
-                }
-            }
-
-            CartesianChartHost(
-                chart = rememberCartesianChart(
-                    rememberLineCartesianLayer(
-                        listOf(
-                            rememberLineSpec(
-                                shader = DynamicShaders.color(lineColor)
-                            )
-                        )
-                    )
-                ),
-                modelProducer = modelProducer,
+            Canvas(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, top = 48.dp, bottom = 36.dp),
-            )
+                    .matchParentSize()
+                    .padding(start = 16.dp, end = 16.dp, top = 48.dp, bottom = 36.dp)
+            ) {
+                val interpolated = interpolatePoints(prevPoints, currentPoints, progress)
+                val linePath = buildBezierPath(interpolated, size, heightFraction = 0.75f)
+                val fillPath = buildFillPath(linePath, size)
+
+                drawPath(
+                    path = fillPath,
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            lineColor.copy(alpha = 0.3f),
+                            lineColor.copy(alpha = 0.0f)
+                        ),
+                        startY = 0f,
+                        endY = size.height
+                    )
+                )
+
+                drawPath(
+                    path = linePath,
+                    color = lineColor,
+                    style = Stroke(
+                        width = 2.5f,
+                        cap = StrokeCap.Round,
+                        join = StrokeJoin.Round
+                    )
+                )
+            }
         } else {
             Text(
                 text = "--",
