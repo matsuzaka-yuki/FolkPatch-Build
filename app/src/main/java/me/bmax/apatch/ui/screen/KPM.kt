@@ -99,6 +99,7 @@ import com.topjohnwu.superuser.nio.ExtendedFile
 import com.topjohnwu.superuser.nio.FileSystemManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
@@ -736,7 +737,7 @@ private fun KPModuleList(
                 }
 
                 else -> {
-                    itemsIndexed(moduleList, key = { index, module -> "${index}_${module.name}" }) { index, module ->
+                    itemsIndexed(moduleList, key = { _, module -> module.name }) { index, module ->
                         val scope = rememberCoroutineScope()
                         KPModuleItem(
                             module,
@@ -989,8 +990,8 @@ private fun KPModuleItem(
             return@produceState
         }
 
-        // Get effective API source
-        val effectiveApiSource = BackgroundConfig.getEffectiveBannerApiSource()
+        KPModuleViewModel.bannerSemaphore.withPermit {
+            val effectiveApiSource = BackgroundConfig.getEffectiveBannerApiSource()
 
         if (BackgroundConfig.isBannerApiModeEnabled && effectiveApiSource.isNotBlank()) {
             val apiBanner = withContext(Dispatchers.IO) {
@@ -1010,6 +1011,7 @@ private fun KPModuleItem(
             withContext(Dispatchers.IO) { readKpmBanner(context, module.name) }
         } else {
             null
+        }
         }
     }
 

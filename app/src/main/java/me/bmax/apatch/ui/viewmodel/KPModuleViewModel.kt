@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
 import me.bmax.apatch.Natives
 import java.text.Collator
 import java.util.Locale
@@ -18,6 +19,7 @@ class KPModuleViewModel : ViewModel() {
     companion object {
         private const val TAG = "KPModuleViewModel"
         private var modules by mutableStateOf<List<KPModel.KPMInfo>>(emptyList())
+        val bannerSemaphore = Semaphore(4)
     }
 
     var isRefreshing by mutableStateOf(false)

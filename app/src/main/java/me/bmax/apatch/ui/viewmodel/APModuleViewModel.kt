@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.apApp
 import me.bmax.apatch.util.getRootShell
@@ -77,6 +79,8 @@ class APModuleViewModel : ViewModel() {
     var sortOptimizationEnabled by mutableStateOf(prefs.getBoolean("module_sort_optimization", true))
     private val bannerCache = mutableStateMapOf<String, BannerInfo>()
     private val moduleSizeCache = mutableStateMapOf<String, Long>()
+    private val updateSemaphore = Semaphore(3)
+    val bannerSemaphore = Semaphore(4)
 
     private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         if (key == "module_sort_optimization") {
@@ -199,6 +203,7 @@ class APModuleViewModel : ViewModel() {
                     }.toList()
                 pruneBannerCache(modules.map { it.id }.toSet())
                 pruneModuleSizeCache(modules.map { it.id }.toSet())
+                prefetchModuleSizes(modules.map { it.id })
                 isNeedRefresh = false
             }.onFailure { e ->
                 Log.e(TAG, "fetchModuleList: ", e)
@@ -218,7 +223,13 @@ class APModuleViewModel : ViewModel() {
         return version.replace(Regex("[^a-zA-Z0-9.\\-_]"), "_")
     }
 
-    fun checkUpdate(m: ModuleInfo): Triple<String, String, String> {
+    suspend fun checkUpdate(m: ModuleInfo): Triple<String, String, String> {
+        updateSemaphore.withPermit {
+            return checkUpdateInternal(m)
+        }
+    }
+
+    private fun checkUpdateInternal(m: ModuleInfo): Triple<String, String, String> {
         val empty = Triple("", "", "")
         if (prefs.getBoolean("disable_module_update_check", false)) {
             return empty
@@ -264,28 +275,42 @@ class APModuleViewModel : ViewModel() {
         return Triple(zipUrl, version, changelog)
     }
 
+    private fun prefetchModuleSizes(moduleIds: List<String>) {
+        if (moduleIds.isEmpty()) return
+        val idsToFetch = moduleIds.filter { it !in moduleSizeCache }
+        if (idsToFetch.isEmpty()) return
+
+        runCatching {
+            val sb = StringBuilder("for d in")
+            for (id in idsToFetch) {
+                sb.append(" /data/adb/modules/")
+                sb.append(id.replace(" ", "\\ "))
+            }
+            sb.append("; do if [ -d \"\$d\" ]; then /data/adb/ap/bin/busybox du -sb \"\$d\" 2>/dev/null; fi; done")
+            val result = getRootShell().newJob().add(sb.toString()).to(ArrayList(), null).exec()
+            if (result.isSuccess) {
+                for (line in result.out) {
+                    val parts = line.split("\t", limit = 2)
+                    if (parts.size == 2) {
+                        val size = parts[0].trim().toLongOrNull() ?: continue
+                        val path = parts[1].trim()
+                        val id = path.removePrefix("/data/adb/modules/")
+                        if (id in idsToFetch) {
+                            moduleSizeCache[id] = size
+                        }
+                    }
+                }
+            }
+        }.onFailure { e ->
+            Log.e(TAG, "Error prefetching module sizes", e)
+        }
+    }
+
     fun getModuleSize(moduleId: String): String {
         moduleSizeCache[moduleId]?.let { cachedBytes ->
             return formatFileSize(cachedBytes)
         }
-
-        val bytes = runCatching {
-            val command = "/data/adb/ap/bin/busybox find /data/adb/modules/$moduleId -type f -exec stat -c '%s %i' {} + 2>/dev/null | /data/adb/ap/bin/busybox awk '{if(!seen[\$2]++) total+=\$1} END {print total}'"
-            val result = getRootShell().newJob().add(command).to(ArrayList(), null).exec()
-
-            if (result.isSuccess && result.out.isNotEmpty()) {
-                val size = result.out.firstOrNull()?.trim()?.toLongOrNull() ?: 0L
-                moduleSizeCache[moduleId] = size
-                size
-            } else {
-                0L
-            }
-        }.onFailure { e ->
-            Log.e(TAG, "Error calculating module size for $moduleId", e)
-            0L
-        }.getOrDefault(0L)
-
-        return formatFileSize(bytes)
+        return "0 KB"
     }
 }
 

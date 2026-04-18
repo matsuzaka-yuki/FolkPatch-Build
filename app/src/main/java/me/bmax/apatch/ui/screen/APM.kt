@@ -127,6 +127,7 @@ import com.ramcosta.composedestinations.generated.destinations.InstallScreenDest
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
@@ -815,7 +816,7 @@ private fun ModuleList(
                 }
 
                 else -> {
-                    itemsIndexed(modules, key = { index, module -> "${index}_${module.id}" }) { index, module ->
+                    itemsIndexed(modules, key = { _, module -> module.id }) { index, module ->
                         var isChecked by rememberSaveable(module) { mutableStateOf(module.enabled) }
                         val scope = rememberCoroutineScope()
                         val updatedModule by produceState(initialValue = Triple("", "", ""), key1 = module.id) {
@@ -1252,6 +1253,10 @@ private fun ModuleItem(
     }
     
     val sizeStr by produceState(initialValue = "0 KB", key1 = module.id) {
+        if (!showMoreModuleInfo) {
+            value = "0 KB"
+            return@produceState
+        }
         value = withContext(Dispatchers.IO) {
             viewModel.getModuleSize(module.id)
         }
@@ -1271,8 +1276,8 @@ private fun ModuleItem(
             return@produceState
         }
 
-        // Get effective API source
-        val effectiveApiSource = BackgroundConfig.getEffectiveBannerApiSource()
+        viewModel.bannerSemaphore.withPermit {
+            val effectiveApiSource = BackgroundConfig.getEffectiveBannerApiSource()
 
         if (BackgroundConfig.isBannerApiModeEnabled && effectiveApiSource.isNotBlank()) {
             val apiBanner = withContext(Dispatchers.IO) {
@@ -1337,6 +1342,7 @@ private fun ModuleItem(
 
         viewModel.putBannerInfo(module.id, loaded)
         value = loaded
+        }
     }
 
     val cardColor = if (isWallpaperMode) {
