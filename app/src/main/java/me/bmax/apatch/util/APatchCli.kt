@@ -409,9 +409,11 @@ fun setHideServiceEnabled(enable: Boolean) {
         .submit { result ->
             Log.i(TAG, "setHideServiceEnabled result: ${result.isSuccess} [${result.out}]")
         }
-    // 如果启用，立即执行一次 Hide 二进制
+    // 如果启用，异步执行一次 Hide 二进制（避免阻塞 UI 线程）
     if (enable) {
-        executeHideBinary()
+        CoroutineScope(Dispatchers.IO).launch {
+            executeHideBinary()
+        }
     }
 }
 
