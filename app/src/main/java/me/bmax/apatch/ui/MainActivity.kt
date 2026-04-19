@@ -525,7 +525,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            APatchThemeWithBackground(navController = navController) {
+            APatchThemeWithBackground(
+                navController = navController,
+                folkXEngineEnabled = folkXEngineEnabled,
+                folkXAnimationType = folkXAnimationType,
+                folkXAnimationSpeed = folkXAnimationSpeed
+            ) {
                 
                 val showUpdateDialog = remember { mutableStateOf(false) }
                 val context = LocalContext.current
@@ -726,12 +731,15 @@ class MainActivity : AppCompatActivity() {
                                     LocalSnackbarHost provides snackBarHostState,
                                     LocalIsFloatingNavMode provides false,
                                 ) {
+                                    val railNavTransitions = remember(folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes) {
+                                        createNavTransitions(folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes, useNavigationRail = true)
+                                    }
                                     DestinationsNavHost(
                                         modifier = Modifier.fillMaxSize(),
                                         navGraph = NavGraphs.root,
                                         navController = navController,
                                         engine = rememberNavHostEngine(navHostContentAlignment = Alignment.TopCenter),
-                                        defaultTransitions = createNavTransitions(folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes, useNavigationRail = true)
+                                        defaultTransitions = railNavTransitions
                                     )
                                 }
                             }
@@ -762,6 +770,9 @@ class MainActivity : AppCompatActivity() {
                                 LocalBottomBarVisible provides bottomBarVisibleState,
                                 LocalIsFloatingNavMode provides isFloatingMode
                             ) {
+                                val bottomNavTransitions = remember(folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes) {
+                                    createNavTransitions(folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes, useNavigationRail = false)
+                                }
                                 DestinationsNavHost(
                                     modifier = Modifier
                                         .fillMaxSize()
@@ -781,7 +792,7 @@ class MainActivity : AppCompatActivity() {
                                     navGraph = NavGraphs.root,
                                     navController = navController,
                                     engine = rememberNavHostEngine(navHostContentAlignment = Alignment.TopCenter),
-                                    defaultTransitions = createNavTransitions(folkXEngineEnabled, folkXAnimationType, folkXAnimationSpeed, bottomBarRoutes, useNavigationRail = false)
+                                    defaultTransitions = bottomNavTransitions
                                 )
                             }
 
@@ -1494,7 +1505,6 @@ private fun NavigationRailBar(navController: NavHostController) {
     }
 }
 
-@Composable
 private fun createNavTransitions(
     folkXEngineEnabled: Boolean,
     folkXAnimationType: String?,

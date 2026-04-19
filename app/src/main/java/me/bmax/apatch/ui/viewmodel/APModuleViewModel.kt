@@ -97,8 +97,9 @@ class APModuleViewModel : ViewModel() {
         prefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
     }
 
+    private val collator = Collator.getInstance(Locale.getDefault())
+
     val moduleList by derivedStateOf {
-        val collator = Collator.getInstance(Locale.getDefault())
         if (sortOptimizationEnabled) {
             modules.sortedWith(
                 compareByDescending<ModuleInfo> { it.isMetamodule }
@@ -110,8 +111,7 @@ class APModuleViewModel : ViewModel() {
                     .thenBy(collator) { it.id }
             )
         } else {
-            val comparator = compareBy(collator, ModuleInfo::id)
-            modules.sortedWith(comparator)
+            modules.sortedWith(compareBy(collator, ModuleInfo::id))
         }
     }
 
@@ -197,11 +197,14 @@ class APModuleViewModel : ViewModel() {
                             obj.optString("name").contains("LSPosed", ignoreCase = true)
                         )
                     }.toList()
-                pruneBannerCache(modules.map { it.id }.toSet())
-                pruneModuleSizeCache(modules.map { it.id }.toSet())
-                prefetchModuleSizes(modules.map { it.id })
                 isNeedRefresh = false
-                batchCheckUpdates()
+
+                // Non-critical: run in background without blocking module display
+                val ids = modules.map { it.id }
+                pruneBannerCache(ids.toSet())
+                pruneModuleSizeCache(ids.toSet())
+                viewModelScope.launch(Dispatchers.IO) { prefetchModuleSizes(ids) }
+                viewModelScope.launch(Dispatchers.IO) { batchCheckUpdates() }
 
                 Log.i(TAG, "load cost: ${SystemClock.elapsedRealtime() - start}, modules: $modules")
             } catch (e: Exception) {

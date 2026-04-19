@@ -248,32 +248,42 @@ fun APatchTheme(
 @Composable
 fun APatchThemeWithBackground(
     navController: NavHostController? = null,
+    folkXEngineEnabled: Boolean = true,
+    folkXAnimationType: String? = "linear",
+    folkXAnimationSpeed: Float = 1.0f,
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
-    
+
     // Check current route
     val currentRoute = navController?.currentBackStackEntryAsState()?.value?.destination?.route
     val isSettingsScreen = currentRoute == SettingScreenDestination.route
-    
-    // 立即加载背景配置，不使用LaunchedEffect
-    BackgroundManager.loadCustomBackground(context)
-    FontConfig.load(context)
-    android.util.Log.d("APatchThemeWithBackground", "加载背景配置完成")
-    
+
+    // Load background/font config once (synchronously for first frame), then only reload on theme change
+    var isConfigLoaded by remember { mutableStateOf(false) }
+    if (!isConfigLoaded) {
+        BackgroundManager.loadCustomBackground(context)
+        FontConfig.load(context)
+        isConfigLoaded = true
+    }
+
     // 监听refreshTheme的变化，重新加载背景配置
     val refreshThemeObserver by refreshTheme.observeAsState(false)
     if (refreshThemeObserver) {
         BackgroundManager.loadCustomBackground(context)
         FontConfig.load(context)
-        android.util.Log.d("APatchThemeWithBackground", "重新加载背景配置")
         refreshTheme.postValue(false)
     }
     
     APatchTheme(isSettingsScreen = isSettingsScreen) {
         Box(modifier = Modifier.fillMaxSize()) {
             // Always show background layer if enabled
-            BackgroundLayer(currentRoute)
+            BackgroundLayer(
+                currentRoute = currentRoute,
+                folkXEngineEnabled = folkXEngineEnabled,
+                folkXAnimationType = folkXAnimationType,
+                folkXAnimationSpeed = folkXAnimationSpeed
+            )
             
             // Content layer - add zIndex to ensure it's above the background
             Box(modifier = Modifier.fillMaxSize().zIndex(1f)) {

@@ -275,7 +275,9 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
     ) { viewModel.fetchModuleList() }
     //TODO: FIXME -> val isSafeMode = Natives.getSafeMode()
     val isSafeMode = false
-    val hasMagisk = hasMagisk()
+    val hasMagisk by produceState(initialValue = false) {
+        value = withContext(Dispatchers.IO) { hasMagisk() }
+    }
     val hideInstallButton = isSafeMode || hasMagisk
 
     val moduleListState = rememberLazyListState()

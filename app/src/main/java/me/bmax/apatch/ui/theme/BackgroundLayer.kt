@@ -56,14 +56,16 @@ import me.bmax.apatch.ui.screen.BottomBarDestination
  * Priority: Video > Multi/Single Image > Default
  */
 @Composable
-fun BackgroundLayer(currentRoute: String? = null) {
+fun BackgroundLayer(
+    currentRoute: String? = null,
+    folkXEngineEnabled: Boolean = true,
+    folkXAnimationType: String? = "linear",
+    folkXAnimationSpeed: Float = 1.0f
+) {
     val context = LocalContext.current
     val prefs = APApplication.sharedPreferences
-    val darkThemeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
-    val nightModeEnabled = prefs.getBoolean("night_mode_enabled", true)
-    val folkXEngineEnabled = prefs.getBoolean("folkx_engine_enabled", true)
-    val folkXAnimationType = prefs.getString("folkx_animation_type", "linear")
-    val folkXAnimationSpeed = prefs.getFloat("folkx_animation_speed", 1.0f)
+    val darkThemeFollowSys = remember { prefs.getBoolean("night_mode_follow_sys", false) }
+    val nightModeEnabled = remember { prefs.getBoolean("night_mode_enabled", true) }
     val isDarkTheme = if (darkThemeFollowSys) {
         isSystemInDarkTheme()
     } else {
