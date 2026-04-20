@@ -40,6 +40,12 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.itemsIndexed as gridItemsIndexed
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
 import androidx.compose.material.ExperimentalMaterialApi
@@ -280,7 +286,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
     }
     val hideInstallButton = isSafeMode || hasMagisk
 
-    val moduleListState = rememberLazyListState()
+    val moduleListState = rememberLazyGridState()
 
     var searchQuery by remember { mutableStateOf("") }
     val filteredModuleList = remember(viewModel.moduleList, searchQuery) {
@@ -559,7 +565,7 @@ private fun ModuleList(
     simpleListBottomBar: Boolean,
     checkStrongBiometric: suspend () -> Boolean,
     modifier: Modifier = Modifier,
-    state: LazyListState,
+    state: LazyGridState,
     onInstallModule: (Uri) -> Unit,
     onClickModule: (id: String, name: String, hasWebUi: Boolean) -> Unit,
     snackBarHost: SnackbarHostState,
@@ -723,10 +729,15 @@ private fun ModuleList(
         state = pullToRefreshState,
         indicator = { PullToRefreshDefaults.LoadingIndicator(state = pullToRefreshState, isRefreshing = viewModel.isRefreshing, modifier = Modifier.align(Alignment.TopCenter)) }
     ) {
-        LazyColumn(
+        val configuration = LocalConfiguration.current
+        val isWideScreen = configuration.screenWidthDp >= 600
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(if (isWideScreen) 2 else 1),
             modifier = Modifier.fillMaxSize(),
             state = state,
             verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = remember {
                 PaddingValues(
                     start = 16.dp,
@@ -738,7 +749,7 @@ private fun ModuleList(
         ) {
             // Warning Banner
             if (showMountWarning) {
-                item {
+                item(span = { GridItemSpan(maxLineSpan) }) {
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
                         color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f),
@@ -805,9 +816,9 @@ private fun ModuleList(
 
             when {
                 modules.isEmpty() -> {
-                    item {
+                    item(span = { GridItemSpan(maxLineSpan) }) {
                         Box(
-                            modifier = Modifier.fillParentMaxSize(),
+                            modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -818,7 +829,7 @@ private fun ModuleList(
                 }
 
                 else -> {
-                    itemsIndexed(modules, key = { _, module -> module.id }) { index, module ->
+                    gridItemsIndexed(modules, key = { _, module -> module.id }) { index, module ->
                         var isChecked by rememberSaveable(module) { mutableStateOf(module.enabled) }
                         val scope = rememberCoroutineScope()
                         val updatedModule = viewModel.getCachedUpdate(module.id)
@@ -881,8 +892,6 @@ private fun ModuleList(
                             onClick = { clickedModule ->
                                 onClickModule(clickedModule.id, clickedModule.name, clickedModule.hasWebUi)
                             })
-                        // fix last item shadow incomplete in LazyColumn
-                        Spacer(Modifier.height(1.dp))
                     }
                 }
             }

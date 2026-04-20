@@ -35,6 +35,12 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.itemsIndexed as gridItemsIndexed
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.KeyboardActions
@@ -240,7 +246,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
         }
     }
 
-    val kpModuleListState = rememberLazyListState()
+    val kpModuleListState = rememberLazyGridState()
 
     var searchQuery by remember { mutableStateOf("") }
     val filteredModuleList = remember(viewModel.moduleList, searchQuery) {
@@ -657,7 +663,7 @@ private fun KPModuleList(
     viewModel: KPModuleViewModel,
     moduleList: List<KPModel.KPMInfo>,
     modifier: Modifier = Modifier,
-    state: LazyListState,
+    state: LazyGridState,
     showMoreModuleInfo: Boolean,
     foldSystemModule: Boolean,
     simpleListBottomBar: Boolean,
@@ -709,10 +715,15 @@ private fun KPModuleList(
         state = pullToRefreshState,
         indicator = { PullToRefreshDefaults.LoadingIndicator(state = pullToRefreshState, isRefreshing = viewModel.isRefreshing, modifier = Modifier.align(Alignment.TopCenter)) }
     ) {
-        LazyColumn(
+        val configuration = LocalConfiguration.current
+        val isWideScreen = configuration.screenWidthDp >= 600
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(if (isWideScreen) 2 else 1),
             modifier = Modifier.fillMaxSize(),
             state = state,
             verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = remember {
                 PaddingValues(
                     start = 16.dp,
@@ -724,9 +735,9 @@ private fun KPModuleList(
         ) {
             when {
                 moduleList.isEmpty() -> {
-                    item {
+                    item(span = { GridItemSpan(maxLineSpan) }) {
                         Box(
-                            modifier = Modifier.fillParentMaxSize(),
+                            modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -737,7 +748,7 @@ private fun KPModuleList(
                 }
 
                 else -> {
-                    itemsIndexed(moduleList, key = { _, module -> module.name }) { index, module ->
+                    gridItemsIndexed(moduleList, key = { _, module -> module.name }) { index, module ->
                         val scope = rememberCoroutineScope()
                         KPModuleItem(
                             module,
@@ -760,9 +771,6 @@ private fun KPModuleList(
                                 expandedModuleId = if (expandedModuleId == module.name) null else module.name
                             }
                         )
-
-                        // fix last item shadow incomplete in LazyColumn
-                        Spacer(Modifier.height(1.dp))
                     }
                 }
             }
