@@ -26,7 +26,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.IntrinsicSize
+import me.bmax.apatch.ui.component.UniformHeightRow
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.size
@@ -747,12 +747,12 @@ private fun KPModuleList(
                 else -> {
                     if (isWideScreen) {
                         items(chunkedModules!!, key = { chunk -> chunk.joinToString("|") { it.name } }) { chunk ->
-                            Row(
-                                modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
-                                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            UniformHeightRow(
+                                modifier = Modifier.fillMaxWidth(),
+                                spacing = 16.dp
                             ) {
                                 chunk.forEach { module ->
-                                    Column(modifier = Modifier.weight(1f).fillMaxHeight()) {
+                                    Column(modifier = Modifier.fillMaxHeight()) {
                                         val scope = rememberCoroutineScope()
                                         KPModuleItem(
                                             module,
@@ -776,9 +776,6 @@ private fun KPModuleList(
                                             }
                                         )
                                     }
-                                }
-                                if (chunk.size == 1) {
-                                    Spacer(modifier = Modifier.weight(1f))
                                 }
                             }
                         }

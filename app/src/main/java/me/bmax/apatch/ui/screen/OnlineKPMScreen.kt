@@ -3,6 +3,7 @@ package me.bmax.apatch.ui.screen
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.clickable
+import me.bmax.apatch.ui.component.UniformHeightRow
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -133,17 +134,14 @@ fun OnlineKPMScreen(navigator: DestinationsNavigator) {
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         items(chunkedModules, key = { chunk -> chunk.joinToString("|") { it.name } }) { chunk ->
-                            Row(
-                                modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            UniformHeightRow(
+                                modifier = Modifier.fillMaxWidth(),
+                                spacing = 8.dp
                             ) {
                                 chunk.forEach { module ->
-                                    Column(modifier = Modifier.weight(1f).fillMaxHeight()) {
+                                    Column(modifier = Modifier.fillMaxHeight()) {
                                         OnlineKPMItem(module, context)
                                     }
-                                }
-                                if (chunk.size == 1) {
-                                    Spacer(modifier = Modifier.weight(1f))
                                 }
                             }
                         }

@@ -32,7 +32,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.IntrinsicSize
+import me.bmax.apatch.ui.component.UniformHeightRow
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -827,12 +827,12 @@ private fun ModuleList(
                 else -> {
                     if (isWideScreen) {
                         items(chunkedModules!!, key = { chunk -> chunk.joinToString("|") { it.id } }) { chunk ->
-                            Row(
-                                modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
-                                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            UniformHeightRow(
+                                modifier = Modifier.fillMaxWidth(),
+                                spacing = 16.dp
                             ) {
                                 chunk.forEach { module ->
-                                    Column(modifier = Modifier.weight(1f).fillMaxHeight()) {
+                                    Column(modifier = Modifier.fillMaxHeight()) {
                                         var isChecked by rememberSaveable(module) { mutableStateOf(module.enabled) }
                                         val scope = rememberCoroutineScope()
                                         val updatedModule = viewModel.getCachedUpdate(module.id)
@@ -896,9 +896,6 @@ private fun ModuleList(
                                                 onClickModule(clickedModule.id, clickedModule.name, clickedModule.hasWebUi)
                                             })
                                     }
-                                }
-                                if (chunk.size == 1) {
-                                    Spacer(modifier = Modifier.weight(1f))
                                 }
                             }
                         }
