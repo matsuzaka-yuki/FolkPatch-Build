@@ -920,4 +920,9 @@ Upewnij się, że aplikacja jest całkowicie zamknięta i ponownie otwarta, aby 
     <string name="home_stats_kernel_modules">Moduły jądra</string>
     <string name="home_stats_apm_modules">Moduły systemowe</string>
     <string name="home_stats_superusers">Superużytkownicy</string>
+    <string name="settings_kernel_spoof">Konfiguracja fałszowania jądra</string>
+    <string name="settings_kernel_spoof_summary">Fałszuj wersję jądra i czas budowy</string>
+    <string name="settings_kernel_spoof_version">Wersja jądra</string>
+    <string name="settings_kernel_spoof_build_time">Czas budowy jądra</string>
+    <string name="settings_kernel_spoof_restore">Przywróć</string>
 </resources>

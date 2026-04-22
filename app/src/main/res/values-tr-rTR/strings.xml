@@ -1007,4 +1007,9 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="home_stats_kernel_modules">Çekirdek Modüller</string>
     <string name="home_stats_apm_modules">Sistem Modülleri</string>
     <string name="home_stats_superusers">Süper Kullanıcılar</string>
+    <string name="settings_kernel_spoof">Çekirdek Sahtekarlık Yapılandırması</string>
+    <string name="settings_kernel_spoof_summary">Çekirdek sürümünü ve yapım zamanını sahtele</string>
+    <string name="settings_kernel_spoof_version">Çekirdek Sürümü</string>
+    <string name="settings_kernel_spoof_build_time">Çekirdek Yapım Zamanı</string>
+    <string name="settings_kernel_spoof_restore">Geri Yükle</string>
 </resources>

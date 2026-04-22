@@ -1016,4 +1016,9 @@
     <string name="home_stats_kernel_modules">커널 모듈</string>
     <string name="home_stats_apm_modules">시스템 모듈</string>
     <string name="home_stats_superusers">슈퍼유저</string>
+    <string name="settings_kernel_spoof">커널 위장 설정</string>
+    <string name="settings_kernel_spoof_summary">커널 버전 및 빌드 시간 위장</string>
+    <string name="settings_kernel_spoof_version">커널 버전</string>
+    <string name="settings_kernel_spoof_build_time">커널 빌드 시간</string>
+    <string name="settings_kernel_spoof_restore">복원</string>
 </resources>

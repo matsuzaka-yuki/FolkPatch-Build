@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">FolkPatch</string>
     <string name="app_name_fpatch">FPatch</string>
@@ -992,4 +992,9 @@
     <string name="home_stats_kernel_modules">內核模組</string>
     <string name="home_stats_apm_modules">系統模組</string>
     <string name="home_stats_superusers">超級使用者</string>
+    <string name="settings_kernel_spoof">內核偽裝配置</string>
+    <string name="settings_kernel_spoof_summary">偽裝內核版本和構建時間</string>
+    <string name="settings_kernel_spoof_version">內核版本</string>
+    <string name="settings_kernel_spoof_build_time">內核構建時間</string>
+    <string name="settings_kernel_spoof_restore">恢復</string>
 </resources>

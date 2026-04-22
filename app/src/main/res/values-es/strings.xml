@@ -1006,4 +1006,9 @@ Por ejemplo, los KPM que previenen la modificación de particiones solo pueden u
     <string name="home_stats_kernel_modules">Módulos del Kernel</string>
     <string name="home_stats_apm_modules">Módulos del Sistema</string>
     <string name="home_stats_superusers">Superusuarios</string>
+    <string name="settings_kernel_spoof">Configuración de Falsificación del Kernel</string>
+    <string name="settings_kernel_spoof_summary">Falsificar versión del kernel y tiempo de compilación</string>
+    <string name="settings_kernel_spoof_version">Versión del Kernel</string>
+    <string name="settings_kernel_spoof_build_time">Tiempo de Compilación del Kernel</string>
+    <string name="settings_kernel_spoof_restore">Restaurar</string>
 </resources>

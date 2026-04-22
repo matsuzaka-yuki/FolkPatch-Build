@@ -914,4 +914,9 @@
     <string name="home_stats_kernel_modules">カーネルモジュール</string>
     <string name="home_stats_apm_modules">システムモジュール</string>
     <string name="home_stats_superusers">スーパーユーザー</string>
+    <string name="settings_kernel_spoof">カーネル偽装設定</string>
+    <string name="settings_kernel_spoof_summary">カーネルバージョンとビルド時間を偽装</string>
+    <string name="settings_kernel_spoof_version">カーネルバージョン</string>
+    <string name="settings_kernel_spoof_build_time">カーネルビルド時間</string>
+    <string name="settings_kernel_spoof_restore">復元</string>
 </resources>

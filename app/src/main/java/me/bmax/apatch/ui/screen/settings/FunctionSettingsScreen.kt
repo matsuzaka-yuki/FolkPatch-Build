@@ -29,6 +29,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import android.system.Os
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -51,6 +52,9 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
     val aPatchReady = (state == APApplication.State.ANDROIDPATCH_INSTALLING || state == APApplication.State.ANDROIDPATCH_INSTALLED || state == APApplication.State.ANDROIDPATCH_NEED_UPDATE)
 
     var isHideServiceEnabled by rememberSaveable { mutableStateOf(false) }
+    var isKernelSpoofEnabled by rememberSaveable { mutableStateOf(false) }
+    var kernelSpoofVersion by rememberSaveable { mutableStateOf("") }
+    var kernelSpoofBuildTime by rememberSaveable { mutableStateOf("") }
 
     LaunchedEffect(kPatchReady, aPatchReady) {
         if (kPatchReady && aPatchReady) {
@@ -90,6 +94,19 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                     aPatchReady = aPatchReady,
                     isHideServiceEnabled = isHideServiceEnabled,
                     onHideServiceChange = { isHideServiceEnabled = it },
+                    isKernelSpoofEnabled = isKernelSpoofEnabled,
+                    onKernelSpoofChange = { isKernelSpoofEnabled = it },
+                    kernelSpoofVersion = kernelSpoofVersion,
+                    onKernelSpoofVersionChange = { kernelSpoofVersion = it },
+                    kernelSpoofBuildTime = kernelSpoofBuildTime,
+                    onKernelSpoofBuildTimeChange = { kernelSpoofBuildTime = it },
+                    onKernelSpoofSave = {
+                    },
+                    onKernelSpoofRestore = {
+                        val uname = Os.uname()
+                        kernelSpoofVersion = uname.release
+                        kernelSpoofBuildTime = uname.version
+                    },
                     snackBarHost = snackBarHost,
                     onNavigateToUmountConfig = { navigator.navigate(UmountConfigScreenDestination) },
                     flat = flat,

@@ -977,4 +977,9 @@
     <string name="home_stats_kernel_modules">内核模块（核心模组）</string>
     <string name="home_stats_apm_modules">APM模块（APM模组）</string>
     <string name="home_stats_superusers">超级用户（管理员）</string>
+    <string name="settings_kernel_spoof">内核伪装配置（核心伪装）</string>
+    <string name="settings_kernel_spoof_summary">伪装内核版本和构建时间（修改核心版本和时间）</string>
+    <string name="settings_kernel_spoof_version">内核版本（核心版本）</string>
+    <string name="settings_kernel_spoof_build_time">内核构建时间（核心构建时间）</string>
+    <string name="settings_kernel_spoof_restore">恢复（复原）</string>
 </resources>

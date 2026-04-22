@@ -964,6 +964,11 @@
     <string name="script_library_log_save_failed">保存日志失败：%s</string>
 
     <!-- Umount Service -->
+    <string name="settings_kernel_spoof">内核伪装配置</string>
+    <string name="settings_kernel_spoof_summary">伪装内核版本和构建时间</string>
+    <string name="settings_kernel_spoof_version">内核版本</string>
+    <string name="settings_kernel_spoof_build_time">内核构建时间</string>
+    <string name="settings_kernel_spoof_restore">恢复</string>
     <string name="settings_umount_service">Umount Service</string>
     <string name="settings_umount_service_summary">配置开机自动卸载的挂载点</string>
     <string name="umount_config_title">Umount 配置</string>

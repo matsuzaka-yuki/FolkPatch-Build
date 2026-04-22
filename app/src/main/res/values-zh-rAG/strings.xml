@@ -991,4 +991,9 @@
     <string name="home_stats_kernel_modules">内核模块喵</string>
     <string name="home_stats_apm_modules">APM模块喵</string>
     <string name="home_stats_superusers">超级用户喵</string>
+    <string name="settings_kernel_spoof">内核伪装配置喵</string>
+    <string name="settings_kernel_spoof_summary">伪装内核版本和构建时间喵</string>
+    <string name="settings_kernel_spoof_version">内核版本喵</string>
+    <string name="settings_kernel_spoof_build_time">内核构建时间喵</string>
+    <string name="settings_kernel_spoof_restore">恢复喵</string>
 </resources>

@@ -480,6 +480,11 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="settings_magic_mount_summary">Enable the built-in module mounting system</string>
     <string name="settings_hide_service">FolkPatch Hide</string>
     <string name="settings_hide_service_summary">Hide Bootloader unlock status to some extent</string>
+    <string name="settings_kernel_spoof">Kernel Spoof Config</string>
+    <string name="settings_kernel_spoof_summary">Spoof kernel version and build time</string>
+    <string name="settings_kernel_spoof_version">Kernel Version</string>
+    <string name="settings_kernel_spoof_build_time">Kernel Build Time</string>
+    <string name="settings_kernel_spoof_restore">Restore</string>
     <!-- Umount Service -->
     <string name="settings_umount_service">Umount Service</string>
     <string name="settings_umount_service_summary">Configure mount points to auto-unmount at boot</string>

@@ -987,4 +987,9 @@
     <string name="home_stats_kernel_modules">内核仙卷</string>
     <string name="home_stats_apm_modules">APM 仙卷</string>
     <string name="home_stats_superusers">至尊权限</string>
+    <string name="settings_kernel_spoof">内核伪装术</string>
+    <string name="settings_kernel_spoof_summary">伪装内核版本和修炼时辰</string>
+    <string name="settings_kernel_spoof_version">内核仙卷版本</string>
+    <string name="settings_kernel_spoof_build_time">内核修炼时辰</string>
+    <string name="settings_kernel_spoof_restore">恢复原状</string>
 </resources>

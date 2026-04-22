@@ -991,4 +991,9 @@
     <string name="home_stats_kernel_modules">وحدات النواة</string>
     <string name="home_stats_apm_modules">وحدات النظام</string>
     <string name="home_stats_superusers">المستخدمون الخارقون</string>
+    <string name="settings_kernel_spoof">تكوين التمويه للنواة</string>
+    <string name="settings_kernel_spoof_summary">تمويه إصدار النواة ووقت البناء</string>
+    <string name="settings_kernel_spoof_version">إصدار النواة</string>
+    <string name="settings_kernel_spoof_build_time">وقت بناء النواة</string>
+    <string name="settings_kernel_spoof_restore">استعادة</string>
 </resources>

@@ -1004,4 +1004,9 @@ Por favor, certifique-se de fechar completamente o app e reabri-lo para que os c
     <string name="home_stats_kernel_modules">Módulos do Kernel</string>
     <string name="home_stats_apm_modules">Módulos do Sistema</string>
     <string name="home_stats_superusers">Superusuários</string>
+    <string name="settings_kernel_spoof">Configuração de Falsificação do Kernel</string>
+    <string name="settings_kernel_spoof_summary">Falsificar versão do kernel e tempo de compilação</string>
+    <string name="settings_kernel_spoof_version">Versão do Kernel</string>
+    <string name="settings_kernel_spoof_build_time">Tempo de Compilação do Kernel</string>
+    <string name="settings_kernel_spoof_restore">Restaurar</string>
 </resources>

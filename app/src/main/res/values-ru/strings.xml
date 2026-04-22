@@ -1003,4 +1003,9 @@
     <string name="home_stats_kernel_modules">Модули ядра</string>
     <string name="home_stats_apm_modules">Системные модули</string>
     <string name="home_stats_superusers">Суперпользователи</string>
+    <string name="settings_kernel_spoof">Настройка подмены ядра</string>
+    <string name="settings_kernel_spoof_summary">Подмена версии ядра и времени сборки</string>
+    <string name="settings_kernel_spoof_version">Версия ядра</string>
+    <string name="settings_kernel_spoof_build_time">Время сборки ядра</string>
+    <string name="settings_kernel_spoof_restore">Восстановить</string>
 </resources>

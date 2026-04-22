@@ -985,4 +985,9 @@ Pastikan aplikasi ditutup sepenuhnya dan dimulai ulang untuk menjalankan perinta
     <string name="home_stats_kernel_modules">Modul Kernel</string>
     <string name="home_stats_apm_modules">Modul Sistem</string>
     <string name="home_stats_superusers">Superuser</string>
+    <string name="settings_kernel_spoof">Konfigurasi Pemalsuan Kernel</string>
+    <string name="settings_kernel_spoof_summary">Palsukan versi kernel dan waktu pembuatan</string>
+    <string name="settings_kernel_spoof_version">Versi Kernel</string>
+    <string name="settings_kernel_spoof_build_time">Waktu Pembuatan Kernel</string>
+    <string name="settings_kernel_spoof_restore">Pulihkan</string>
 </resources>
