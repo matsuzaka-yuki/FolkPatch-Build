@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -35,11 +36,17 @@ import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.generated.destinations.UmountConfigScreenDestination
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
+import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.theme.BackgroundConfig
 import me.bmax.apatch.util.isHideServiceEnabled as checkHideServiceEnabled
+import me.bmax.apatch.util.isUtsSpoofEnabled as checkUtsSpoofEnabled
+import me.bmax.apatch.util.setUtsSpoofEnabled
+import me.bmax.apatch.util.writeUtsSpoofConfig
+import me.bmax.apatch.util.removeUtsSpoofConfig
 import me.bmax.apatch.util.ui.LocalSnackbarHost
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
 
@@ -56,10 +63,17 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
     var kernelSpoofVersion by rememberSaveable { mutableStateOf("") }
     var kernelSpoofBuildTime by rememberSaveable { mutableStateOf("") }
 
+    val scope = rememberCoroutineScope()
+
     LaunchedEffect(kPatchReady, aPatchReady) {
         if (kPatchReady && aPatchReady) {
             withContext(Dispatchers.IO) {
                 isHideServiceEnabled = checkHideServiceEnabled()
+                val prefs = APApplication.sharedPreferences
+                isKernelSpoofEnabled = prefs.getBoolean(APApplication.PREF_UTS_SPOOF_ENABLED, false)
+                    && checkUtsSpoofEnabled()
+                kernelSpoofVersion = prefs.getString(APApplication.PREF_UTS_SPOOF_RELEASE, "") ?: ""
+                kernelSpoofBuildTime = prefs.getString(APApplication.PREF_UTS_SPOOF_VERSION, "") ?: ""
             }
         }
     }
@@ -101,11 +115,63 @@ fun FunctionSettingsScreen(navigator: DestinationsNavigator) {
                     kernelSpoofBuildTime = kernelSpoofBuildTime,
                     onKernelSpoofBuildTimeChange = { kernelSpoofBuildTime = it },
                     onKernelSpoofSave = {
+                        val currentEnabled = isKernelSpoofEnabled
+                        val currentVersion = kernelSpoofVersion
+                        val currentBuildTime = kernelSpoofBuildTime
+                        scope.launch(Dispatchers.IO) {
+                            val prefs = APApplication.sharedPreferences
+                            prefs.edit()
+                                .putBoolean(APApplication.PREF_UTS_SPOOF_ENABLED, currentEnabled)
+                                .putString(APApplication.PREF_UTS_SPOOF_RELEASE, currentVersion)
+                                .putString(APApplication.PREF_UTS_SPOOF_VERSION, currentBuildTime)
+                                .apply()
+
+                            if (currentEnabled) {
+                                setUtsSpoofEnabled(true)
+                                writeUtsSpoofConfig(currentVersion, currentBuildTime)
+                                val rc = Natives.utsSet(
+                                    currentVersion.ifBlank { null },
+                                    currentBuildTime.ifBlank { null }
+                                )
+                                withContext(Dispatchers.Main) {
+                                    if (rc < 0) {
+                                        snackBarHost.showSnackbar("Kernel spoof failed: $rc")
+                                    } else {
+                                        snackBarHost.showSnackbar("Kernel spoof applied")
+                                    }
+                                }
+                            } else {
+                                Natives.utsReset()
+                                setUtsSpoofEnabled(false)
+                                removeUtsSpoofConfig()
+                                withContext(Dispatchers.Main) {
+                                    snackBarHost.showSnackbar("Kernel spoof disabled and restored")
+                                }
+                            }
+                        }
                     },
                     onKernelSpoofRestore = {
-                        val uname = Os.uname()
-                        kernelSpoofVersion = uname.release
-                        kernelSpoofBuildTime = uname.version
+                        scope.launch(Dispatchers.IO) {
+                            Natives.utsReset()
+                            val uname = Os.uname()
+                            val realRelease = uname.release
+                            val realVersion = uname.version
+                            withContext(Dispatchers.Main) {
+                                kernelSpoofVersion = realRelease
+                                kernelSpoofBuildTime = realVersion
+                            }
+                            if (isKernelSpoofEnabled) {
+                                val prefs = APApplication.sharedPreferences
+                                val savedRelease = prefs.getString(APApplication.PREF_UTS_SPOOF_RELEASE, "") ?: ""
+                                val savedVersion = prefs.getString(APApplication.PREF_UTS_SPOOF_VERSION, "") ?: ""
+                                if (savedRelease.isNotBlank() || savedVersion.isNotBlank()) {
+                                    Natives.utsSet(
+                                        savedRelease.ifBlank { null },
+                                        savedVersion.ifBlank { null }
+                                    )
+                                }
+                            }
+                        }
                     },
                     snackBarHost = snackBarHost,
                     onNavigateToUmountConfig = { navigator.navigate(UmountConfigScreenDestination) },
